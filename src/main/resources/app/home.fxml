@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="app.controllers.HomeController">
+<!--    <top>
+        <ToolBar>
+            <Button fx:id="buttonHome" text="Home"  onAction="#handleButtonAction" />
+            <Button fx:id="buttonMovimiento" text="Ingresar Movimiento" onAction="#handleButtonAction"/>
+            <Button fx:id="buttonHistorial" text="Historial" onAction="#handleButtonAction" />
+            <Button fx:id="buttonCategorias" text="Categorías" onAction="#handleButtonAction"/>
+            <Button fx:id="buttonPerfil" text="Perfil" onAction="#handleButtonAction"/>
+        </ToolBar>
+    </top>-->
+
+    <center>
+        <VBox alignment="CENTER" spacing="15">
+            <Label text="Bienvenido a tu Gestor de Finanzas"/>
+            <Label text="Balance del mes:"/>
+            <ProgressBar progress="0.5"/>
+        </VBox>
+    </center>
+</BorderPane>
+

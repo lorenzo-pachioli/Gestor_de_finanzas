@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:controller="app.controllers.HeaderController" xmlns:fx="http://javafx.com/fxml">
+    <ToolBar>
+        <Button text="Inicio"  onAction="#handleHomeSelected" />
+        <Button text="Ingresar Movimiento" onAction="#handleMovimientoSelected"/>
+        <Button text="Historial" onAction="#handleHistorialSelected" />
+        <Button text="Categorías" onAction="#handleCategoriasSelected"/>
+        <Button text="Perfil" onAction="#handlePerfilSelected"/>
+    </ToolBar>
+</VBox>

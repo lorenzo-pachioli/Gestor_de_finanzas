@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:controller="app.controllers.LogInController"
+      xmlns:fx="http://javafx.com/fxml" alignment="CENTER" spacing="20.0" style="-fx-padding: 20;">
+
+    <!-- Contenedor donde se renderizará el titulo -->
+    <VBox fx:id="seccionTitulo" />
+
+    <!-- Contenedor donde se renderizará el formulario de FormsFX -->
+    <VBox fx:id="formContainer" />
+
+    <Button text="Iniciar Sesión" onAction="#handleLoginButtonAction"/>
+
+</VBox>
+
