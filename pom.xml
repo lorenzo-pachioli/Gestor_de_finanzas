@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>app</groupId>
-    <artifactId>Gestor de finanzas</artifactId>
+    <artifactId>Gestor_de_finanzas</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Gestor de finanzas</name>
 
