@@ -1,10 +1,9 @@
 package app.controllers;
 
 import app.App;
-import app.models.LoginModel;
+import app.models.usuarios.LoginModel;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -12,7 +11,7 @@ import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
 
-public class LogInController {
+public class LogInController extends Controller {
 
     @FXML
     private VBox formContainer;
@@ -26,7 +25,7 @@ public class LogInController {
     @FXML
     public void initialize() {
 
-        insertarTitulo();
+        insertarTitulo("Gestor de fifnanzas");
 
         // 1. Crear el modelo de datos
         this.model = new LoginModel();
@@ -67,19 +66,4 @@ public class LogInController {
             mostrarAlerta(Alert.AlertType.WARNING, "Error de validación", "Por favor, corrige los errores del formulario.");
         }
     }
-
-    private void mostrarAlerta(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private void insertarTitulo(){
-        Label titulo = new Label("Gestor de Finanzas");
-        titulo.getStyleClass().add("titulo-h1");
-        seccionTitulo.getChildren().setAll(titulo);
-    }
-
 }
