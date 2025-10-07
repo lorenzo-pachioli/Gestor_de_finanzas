@@ -6,10 +6,36 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="app.controllers.PerfilController">
+<BorderPane  xmlns:fx="http://javafx.com/fxml" fx:controller="app.controllers.PerfilController" >
     <center>
-        <VBox alignment="CENTER" spacing="15">
-            <Label text="Perfil"/>
+        <VBox alignment="CENTER" spacing="20.0" style="-fx-padding: 20;">
+            <Label text="Perfil" styleClass="titulo-h1"/>
+
+            <VBox styleClass="perfil-box">
+                <Label text="Nombre" styleClass="titulo-h2"/>
+                <VBox fx:id="seccionNombre" />
+            </VBox>
+
+            <VBox styleClass="perfil-box">
+                <Label text="Apellido" styleClass="titulo-h2"/>
+                <VBox fx:id="seccionApellido" />
+            </VBox>
+
+
+            <VBox styleClass="perfil-box">
+                <Label text="DNI" styleClass="titulo-h2"/>
+                <VBox fx:id="seccionDni" />
+            </VBox>
+
+            <VBox styleClass="perfil-box">
+                <Label text="Email" styleClass="titulo-h2"/>
+                <VBox fx:id="seccionEmail" />
+            </VBox>
+
+            <VBox styleClass="perfil-box">
+                <Label text="Telefono" styleClass="titulo-h2"/>
+                <VBox fx:id="seccionTelefono" />
+            </VBox>
         </VBox>
     </center>
 </BorderPane>

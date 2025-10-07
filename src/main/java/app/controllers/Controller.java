@@ -1,6 +1,5 @@
 package app.controllers;
 
-import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -18,6 +17,12 @@ public abstract class Controller {
     protected void insertarTitulo(String titulo, VBox vBox){
         Label labelTitulo = new Label(titulo);
         labelTitulo.getStyleClass().add("titulo-h1");
+        vBox.getChildren().setAll(labelTitulo);
+    }
+
+    protected void insertarTexto(String titulo, VBox vBox){
+        Label labelTitulo = new Label(titulo);
+        labelTitulo.getStyleClass().add("titulo-p");
         vBox.getChildren().setAll(labelTitulo);
     }
 }
