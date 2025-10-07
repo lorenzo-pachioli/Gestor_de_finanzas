@@ -25,7 +25,7 @@ public class LogInController extends Controller {
     @FXML
     public void initialize() {
 
-        insertarTitulo("Gestor de fifnanzas");
+        insertarTitulo("Gestor de finanzas", this.seccionTitulo);
 
         // 1. Crear el modelo de datos
         this.model = new LoginModel();
@@ -46,7 +46,7 @@ public class LogInController extends Controller {
     }
 
     @FXML
-    private void handleLoginButtonAction() throws Exception  {
+    private void handleLogin() throws Exception  {
 
         loginForm.persist();
 
@@ -65,5 +65,10 @@ public class LogInController extends Controller {
         } else {
             mostrarAlerta(Alert.AlertType.WARNING, "Error de validación", "Por favor, corrige los errores del formulario.");
         }
+    }
+
+    @FXML
+    private void handleRegistro() throws Exception  {
+        App.changeScene("registro.fxml");
     }
 }

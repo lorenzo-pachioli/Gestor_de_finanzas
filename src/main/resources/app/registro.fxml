@@ -16,5 +16,6 @@
 
     <!-- Contenedor donde se renderizará el formulario de FormsFX -->
     <VBox fx:id="formContainer" />
+    <Button text="Registrarse" onAction="#handleRegistro"/>
 
 </VBox>

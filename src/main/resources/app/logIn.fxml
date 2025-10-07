@@ -12,8 +12,8 @@
     <!-- Contenedor donde se renderizará el formulario de FormsFX -->
     <VBox fx:id="formContainer" />
 
-    <Button text="Iniciar Sesión" onAction="#handleLoginButtonAction"/>
-    <Button text="Registrarse" onAction="#handleLoginButtonAction"/>
+    <Button text="Iniciar Sesión" onAction="#handleLogin"/>
+    <Button text="Registrarse" onAction="#handleRegistro"/>
 
 </VBox>
 
