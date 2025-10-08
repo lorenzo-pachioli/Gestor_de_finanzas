@@ -19,26 +19,26 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        try{
+    public void start(Stage primaryStage) {
             stage = primaryStage;
             stage.setTitle("Gestor de Finanzas");
             App.changeScene("logIn.fxml");
             stage.show();
-        } catch (IOException e){
-            System.out.println("Error: " + e.getMessage());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
-    public static void changeScene(String fxml) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
-        Scene scene = new Scene(fxmlLoader.load(), 620, 640);
-        URL cssUrl = App.class.getResource("styles.css");
-        assert cssUrl != null;
-        scene.getStylesheets().add(cssUrl.toExternalForm());
-        stage.setScene(scene);
+    public static void changeScene(String fxml) {
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
+            Scene scene = null;
+            scene = new Scene(fxmlLoader.load(), 620, 640);
+            URL cssUrl = App.class.getResource("styles.css");
+            assert cssUrl != null;
+            scene.getStylesheets().add(cssUrl.toExternalForm());
+            stage.setScene(scene);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void setUsuario(Usuario nuevoUsuario){
