@@ -1,8 +1,11 @@
 package app.controllers;
 
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public abstract class Controller {
 
@@ -24,5 +27,11 @@ public abstract class Controller {
         Label labelTitulo = new Label(titulo);
         labelTitulo.getStyleClass().add("titulo-p");
         vBox.getChildren().setAll(labelTitulo);
+    }
+
+    public void closeWindow(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 }
