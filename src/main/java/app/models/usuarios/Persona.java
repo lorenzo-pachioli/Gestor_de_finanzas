@@ -14,6 +14,9 @@ public abstract class Persona {
     private int telefono;
     private String contrasenia;
 
+    public Persona() {
+    }
+
     public Persona(String nombre, String apellido, int dni, String email, int telefono, String contrasenia) {
         this.id = UUID.randomUUID();
         this.nombre = nombre;
@@ -77,7 +80,7 @@ public abstract class Persona {
         return " No tiene acceso ";
     }
 
-    public void setContrasenia(String contrasenia) throws Exception {
+    public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
 

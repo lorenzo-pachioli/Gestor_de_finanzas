@@ -6,6 +6,9 @@ import app.enums.NivelAcceso;
 public class Usuario extends Persona{
     private final NivelAcceso acceso = NivelAcceso.USUARIO;
 
+    public Usuario() {
+    }
+
     public Usuario(String nombre, String apellido, int dni, String email, int telefono, String contrasenia) {
         super(nombre, apellido, dni, email, telefono, contrasenia);
     }
