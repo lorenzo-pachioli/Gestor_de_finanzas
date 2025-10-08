@@ -21,22 +21,21 @@ public class MasterLayoutController {
 
     @FXML
     public void initialize() {
-        // Establece la comunicación con el controlador del header
-        if (headerComponentController != null) {
-            headerComponentController.setParentController(this);
-        }
-        // Carga la página inicial por defecto
-        loadPage("home.fxml");
+            // Establece la comunicación con el controlador del header
+            if (headerComponentController != null) headerComponentController.setParentController(this);
+
+            // Carga la página inicial por defecto
+            loadPage("home.fxml");
     }
 
-    // Método principal para cargar una página dinámicamente
+    // Metodo principal para cargar una página dinámicamente
     public void loadPage(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource(fxmlPath));
             Node page = loader.load();
             centerPane.getChildren().setAll(page);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }
