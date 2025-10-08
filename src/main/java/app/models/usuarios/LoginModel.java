@@ -1,4 +1,4 @@
-package app.models;
+package app.models.usuarios;
 
 
 import javafx.beans.property.SimpleStringProperty;
