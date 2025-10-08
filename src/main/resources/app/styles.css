@@ -10,19 +10,23 @@
     -fx-pref-width: 620px;
     -fx-font-size: 18pt ;
     -fx-font-weight: bold;
-    -fx-alignment: left;
 }
 
 .titulo-p {
     -fx-pref-width: 620px;
     -fx-font-size: 12pt ;
-    -fx-alignment: left;
 }
 
 .perfil-box {
-    -fx-border-color: grey;
+    -fx-border-color: rgb(232, 232, 232);
+    -fx-background-color: rgb(232, 232, 232, 0.2);
     -fx-border-width: 2px;
     -fx-border-style: solid;
     -fx-padding: 10px;
     -fx-border-radius: 5px;
+}
+
+.cerrar-sesion {
+    -fx-text-fill: rgb(255, 255, 255);
+    -fx-background-color: rgb(255, 77, 77);
 }
