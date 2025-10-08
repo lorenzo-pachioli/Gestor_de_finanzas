@@ -52,10 +52,11 @@ public class LogInController extends Controller {
 
         // Validar el formulario antes de procesar
         if (loginForm.isValid()) {
-            // Lógica de autenticación real
+            // Lógica de autenticación
             String username = model.usernameProperty().get();
             String password = model.passwordProperty().get();
 
+            //Falta agregar la logica que verifica en el JSON si existe el ususario
             if (username.compareTo("admin") == 0 && password.compareTo("pass123") == 0) {
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Inicio de sesión correcto.");
                 App.changeScene("masterLayout.fxml");
