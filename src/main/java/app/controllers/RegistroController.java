@@ -1,7 +1,6 @@
 package app.controllers;
 
 import app.App;
-import app.models.usuarios.LoginModel;
 import app.models.usuarios.RegistroModel;
 import app.models.usuarios.Usuario;
 import com.dlsc.formsfx.model.structure.Field;
@@ -11,6 +10,9 @@ import com.dlsc.formsfx.view.renderer.FormRenderer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
+
+import static app.jsonUtils.JSONPersonas.existeusuario;
+import static app.jsonUtils.JSONPersonas.registrarUsuario;
 
 public class RegistroController extends Controller {
 
@@ -74,8 +76,14 @@ public class RegistroController extends Controller {
             if(contrasenia.compareTo(repetirContrasenia) == 0){
                 Usuario usuario = new Usuario(nombre, apellido, dni, email, telefono, contrasenia);
                 App.setUsuario(usuario);
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Usuario creado con exito");
-                App.changeScene("logIn.fxml");
+                // Verifica si existe y si no existe lo guerda
+                if(!existeusuario(email)){
+                    registrarUsuario(usuario);
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Usuario creado con exito");
+                    App.changeScene("logIn.fxml");
+                } else {
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Ya existe un usuario con ese mail");
+                }
             } else {
                 mostrarAlerta(Alert.AlertType.WARNING, "Error de validación", "Por favor, corrige los errores del formulario.");
             }
@@ -84,4 +92,7 @@ public class RegistroController extends Controller {
         }
     }
 
+    public void handleVolverALogin(){
+        App.changeScene("logIn.fxml");
+    }
 }

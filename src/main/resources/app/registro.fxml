@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -16,6 +13,8 @@
 
     <!-- Contenedor donde se renderizará el formulario de FormsFX -->
     <VBox fx:id="formContainer" />
-    <Button text="Registrarse" onAction="#handleRegistro"/>
-
+    <HBox prefWidth="600.0" alignment="CENTER" spacing="20.0">
+        <Button text="Vover" onAction="#handleVolverALogin"/>
+        <Button text="Registrarse" onAction="#handleRegistro"/>
+    </HBox>
 </VBox>

@@ -1,8 +1,6 @@
 package app.models.usuarios;
 
 import app.App;
-
-import java.security.MessageDigest;
 import java.util.UUID;
 
 public abstract class Persona {
@@ -102,5 +100,18 @@ public abstract class Persona {
                 ", email='" + email + '\'' +
                 ", telefono=" + telefono +
                 ", ";
+    }
+
+
+    public boolean isValid(){
+        if(
+                this.id != null &&
+                this.nombre != null &&
+                this.apellido != null &&
+                this.contrasenia != null &&
+                this.email != null ){
+            return true;
+        }
+        return false;
     }
 }
