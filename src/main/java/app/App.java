@@ -1,5 +1,6 @@
 package app;
 
+import app.models.usuarios.Persona;
 import app.models.usuarios.Usuario;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,7 @@ import java.net.URL;
 public class App extends Application {
 
     private static Stage stage;
-    private static Usuario usuario;
+    private static Persona persona;
 
     public static void main(String[] args) {
         launch(); // Arranca la app y abre la ventana
@@ -26,6 +27,7 @@ public class App extends Application {
             stage.show();
     }
 
+    // Metodo para cambiar la escena dentro de App(ventana completa)
     public static void changeScene(String fxml) {
 
         try {
@@ -41,11 +43,11 @@ public class App extends Application {
         }
     }
 
-    public static void setUsuario(Usuario nuevoUsuario){
-        usuario = nuevoUsuario;
+    public static Persona getPersona() {
+        return persona;
     }
 
-    public static Usuario getUsuario() {
-        return usuario;
+    public static void setPersona(Persona persona) {
+        App.persona = persona;
     }
 }

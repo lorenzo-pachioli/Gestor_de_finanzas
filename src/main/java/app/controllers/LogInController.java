@@ -1,15 +1,18 @@
 package app.controllers;
 
 import app.App;
+import app.models.usuarios.Administrador;
 import app.models.usuarios.LoginModel;
+import app.models.usuarios.Persona;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
+
+import static app.jsonUtils.JSONPersonas.logInPersona;
 
 public class LogInController extends Controller {
 
@@ -33,8 +36,8 @@ public class LogInController extends Controller {
         // 2. Construir el formulario con FormsFX
         this.loginForm = Form.of(
                 Group.of(
-                        Field.ofStringType(model.usernameProperty())
-                                .label("Usuario"),
+                        Field.ofStringType(model.emailProperty())
+                                .label("Email"),
                         Field.ofStringType(model.passwordProperty())
                                 .label("Contraseña")
                 )
@@ -46,20 +49,21 @@ public class LogInController extends Controller {
     }
 
     @FXML
-    private void handleLogin() throws Exception  {
+    private void handleLogin() {
 
         loginForm.persist();
 
         // Validar el formulario antes de procesar
         if (loginForm.isValid()) {
             // Lógica de autenticación
-            String username = model.usernameProperty().get();
-            String password = model.passwordProperty().get();
+            String email = model.emailProperty().get();
+            String contrasenia = model.passwordProperty().get();
 
-            //Falta agregar la logica que verifica en el JSON si existe el ususario
-            if (username.compareTo("admin") == 0 && password.compareTo("pass123") == 0) {
+            Persona persona = logInPersona(email, contrasenia);
+            if (persona.isValid()) {
+                App.setPersona(persona);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Inicio de sesión correcto.");
-                App.changeScene("masterLayout.fxml");
+                redireccionSegunAcceso(persona);
             } else {
                 mostrarAlerta(Alert.AlertType.ERROR, "Error", "Usuario o contraseña incorrectos.");
             }
@@ -68,8 +72,18 @@ public class LogInController extends Controller {
         }
     }
 
+    private void redireccionSegunAcceso(Persona persona){
+        if(persona instanceof Administrador) {
+            //Ingreso a aplicacion Admin
+            App.changeScene("admin/masterLayoutAdmin.fxml");
+        } else {
+            //Ingreso a aplicacion Usuario
+            App.changeScene("masterLayout.fxml");
+        }
+    }
+
     @FXML
-    private void handleRegistro() throws Exception  {
+    private void handleRegistro() {
         App.changeScene("registro.fxml");
     }
 }

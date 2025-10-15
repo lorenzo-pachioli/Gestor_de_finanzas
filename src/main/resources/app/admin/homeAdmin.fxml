@@ -3,10 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="app.controllers.HistorialController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="app.controllers.HomeController">
     <center>
         <VBox alignment="CENTER" spacing="15">
-            <Label text="Historial"/>
+            <Label text="Bienvenido a tu Gestor de Finanzas como admin"/>
         </VBox>
     </center>
 </BorderPane>
