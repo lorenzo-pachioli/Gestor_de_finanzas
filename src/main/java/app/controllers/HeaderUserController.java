@@ -1,15 +1,12 @@
 package app.controllers;
 
 import app.App;
-import app.models.usuarios.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-public class HeaderController {
-    private MasterLayoutController parentController;
+public class HeaderUserController {
+    public MasterLayoutController parentController;
 
-
-    // Método para establecer la referencia al controlador principal
     public void setParentController(MasterLayoutController parentController) {
         this.parentController = parentController;
     }
@@ -49,7 +46,7 @@ public class HeaderController {
     @FXML
     private void handleCerrarSesionSelected(ActionEvent event) {
         if (parentController != null) {
-            App.setUsuario(null);
+            App.setPersona(null);
             App.changeScene("logIn.fxml");
         }
     }

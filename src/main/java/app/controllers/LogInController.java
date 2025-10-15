@@ -1,8 +1,9 @@
 package app.controllers;
 
 import app.App;
+import app.models.usuarios.Administrador;
 import app.models.usuarios.LoginModel;
-import app.models.usuarios.Usuario;
+import app.models.usuarios.Persona;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -11,7 +12,7 @@ import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
 
-import static app.jsonUtils.JSONPersonas.logInUsuario;
+import static app.jsonUtils.JSONPersonas.logInPersona;
 
 public class LogInController extends Controller {
 
@@ -58,17 +59,26 @@ public class LogInController extends Controller {
             String email = model.emailProperty().get();
             String contrasenia = model.passwordProperty().get();
 
-            //Falta agregar la logica que verifica en el JSON si existe el ususario
-            Usuario usuario = logInUsuario(email, contrasenia);
-            if (usuario.isValid()) {
-                App.setUsuario(usuario);
+            Persona persona = logInPersona(email, contrasenia);
+            if (persona.isValid()) {
+                App.setPersona(persona);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Inicio de sesión correcto.");
-                App.changeScene("masterLayout.fxml");
+                redireccionSegunAcceso(persona);
             } else {
                 mostrarAlerta(Alert.AlertType.ERROR, "Error", "Usuario o contraseña incorrectos.");
             }
         } else {
             mostrarAlerta(Alert.AlertType.WARNING, "Error de validación", "Por favor, corrige los errores del formulario.");
+        }
+    }
+
+    private void redireccionSegunAcceso(Persona persona){
+        if(persona instanceof Administrador) {
+            //Ingreso a aplicacion Admin
+            App.changeScene("admin/masterLayoutAdmin.fxml");
+        } else {
+            //Ingreso a aplicacion Usuario
+            App.changeScene("masterLayout.fxml");
         }
     }
 

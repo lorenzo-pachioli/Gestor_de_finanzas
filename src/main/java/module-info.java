@@ -15,4 +15,6 @@ module app.demo {
     exports app;
     exports app.controllers;
     opens app.controllers to javafx.fxml;
+    exports app.controllersAdmin;
+    opens app.controllersAdmin to javafx.fxml;
 }

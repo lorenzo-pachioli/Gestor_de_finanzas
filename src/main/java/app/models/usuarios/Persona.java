@@ -74,7 +74,7 @@ public abstract class Persona {
     }
 
     public String getContrasenia() {
-        if(App.getUsuario().equals(this)) return contrasenia;
+        if(App.getPersona().equals(this)) return contrasenia;
         return " No tiene acceso ";
     }
 

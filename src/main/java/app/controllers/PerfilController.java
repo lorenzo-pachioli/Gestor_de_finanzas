@@ -1,7 +1,7 @@
 package app.controllers;
 
 import app.App;
-import app.models.usuarios.Usuario;
+import app.models.usuarios.Persona;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,13 +39,13 @@ public class PerfilController extends Controller {
 
     private void cargarInformacion() {
 
-        Usuario usuario = App.getUsuario();
-        if (usuario != null) {
-            insertarTexto(usuario.getNombre(), this.seccionNombre);
-            insertarTexto(usuario.getApellido(), this.seccionApellido);
-            insertarTexto(Integer.toString(usuario.getDni()), this.seccionDni);
-            insertarTexto(usuario.getEmail(), this.seccionEmail);
-            insertarTexto(Integer.toString(usuario.getTelefono()), this.seccionTelefono);
+        Persona persona = App.getPersona();
+        if (persona != null) {
+            insertarTexto(persona.getNombre(), this.seccionNombre);
+            insertarTexto(persona.getApellido(), this.seccionApellido);
+            insertarTexto(Integer.toString(persona.getDni()), this.seccionDni);
+            insertarTexto(persona.getEmail(), this.seccionEmail);
+            insertarTexto(Integer.toString(persona.getTelefono()), this.seccionTelefono);
         }
     }
 

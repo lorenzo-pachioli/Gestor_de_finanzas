@@ -1,5 +1,8 @@
 package app.jsonUtils;
 
+import app.enums.NivelAcceso;
+import app.models.usuarios.Administrador;
+import app.models.usuarios.Persona;
 import app.models.usuarios.Usuario;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,16 +22,16 @@ public class JSONPersonas extends JSONUtiles {
         return leer(archivo);
     }
 
-    public static Usuario logInUsuario(String email, String contrasenia) {
+    public static Persona logInPersona(String email, String contrasenia) {
         try {
             JSONArray jsonPersonas = new JSONArray(JSONUtiles.leer(archivo));
 
             for(int i = 0 ; i<jsonPersonas.length() ; i++){
                 JSONObject persona = jsonPersonas.getJSONObject(i);
-                System.out.println("email: " +  persona.getString("email") + "password: " + persona.getString("contrasenia"));
-                System.out.println("email: " +  email + "password: " + contrasenia);
+
                 if(persona.getString("email").equals(email) && persona.getString("contrasenia").equals(contrasenia)){
-                    return jsonAUsuario(persona);
+
+                    return jsonAPersona(persona);
                 }
             }
             return new Usuario();
@@ -48,6 +51,7 @@ public class JSONPersonas extends JSONUtiles {
         u.put("telefono", usuario.getTelefono());
         u.put("email", usuario.getEmail());
         u.put("contrasenia", usuario.getContrasenia());
+        u.put("acceso", usuario.getAcceso());
         array.put(u);
         grabarPersonas(array);
         return true;
@@ -71,13 +75,18 @@ public class JSONPersonas extends JSONUtiles {
         }
     }
 
-    private static Usuario jsonAUsuario(JSONObject persona) {
+    private static Persona jsonAPersona(JSONObject persona){
+
         String nombre = persona.getString("nombre");
         String apellido = persona.getString("apellido");
         int dni = persona.getInt("dni");
         int telefono = persona.getInt("telefono");
         String email = persona.getString("email");
         String contrasenia = persona.getString("contrasenia");
-        return new Usuario(nombre, apellido, dni, email, telefono, contrasenia);
+        String nivel = persona.getString("acceso");
+        if(nivel.equalsIgnoreCase("USUARIO")){
+            return new Usuario(nombre, apellido, dni, email, telefono, contrasenia);
+        }
+        return new Administrador(nombre, apellido, dni, email, telefono, contrasenia);
     }
 }

@@ -3,9 +3,9 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
-            fx:controller="app.controllers.MasterLayoutController">
+            fx:controller="app.controllersAdmin.MasterLayoutAdminController">
     <top>
-        <fx:include source="header.fxml" fx:id="headerUserComponent"/>
+        <fx:include source="headerAdmin.fxml" fx:id="headerAdminComponent"/>
     </top>
     <center>
         <StackPane fx:id="centerPane"/>

@@ -75,7 +75,7 @@ public class RegistroController extends Controller {
 
             if(contrasenia.compareTo(repetirContrasenia) == 0){
                 Usuario usuario = new Usuario(nombre, apellido, dni, email, telefono, contrasenia);
-                App.setUsuario(usuario);
+                App.setPersona(usuario);
                 // Verifica si existe y si no existe lo guerda
                 if(!existeusuario(email)){
                     registrarUsuario(usuario);
