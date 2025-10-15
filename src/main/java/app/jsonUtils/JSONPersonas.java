@@ -9,6 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.util.ArrayList;
+
 
 public class JSONPersonas extends JSONUtiles {
 
@@ -18,8 +20,17 @@ public class JSONPersonas extends JSONUtiles {
         grabar(array, archivo);
     }
 
-    public static JSONTokener leerPersonas(){
-        return leer(archivo);
+    public static JSONArray leerPersonas(){
+        return new JSONArray(leer(archivo));
+    }
+
+    public static ArrayList<Persona> leerPersonasArray(){
+        ArrayList<Persona> listaPersonas = new ArrayList<>();
+        JSONArray JSONPersonas = leerPersonas();
+        for(int i=0 ; i<JSONPersonas.length() ; i++){
+            listaPersonas.add(jsonAPersona(JSONPersonas.getJSONObject(i)));
+        }
+        return listaPersonas;
     }
 
     public static Persona logInPersona(String email, String contrasenia) {
@@ -75,7 +86,7 @@ public class JSONPersonas extends JSONUtiles {
         }
     }
 
-    private static Persona jsonAPersona(JSONObject persona){
+    public static Persona jsonAPersona(JSONObject persona){
 
         String nombre = persona.getString("nombre");
         String apellido = persona.getString("apellido");
