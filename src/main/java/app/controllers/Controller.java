@@ -23,10 +23,29 @@ public abstract class Controller {
         vBox.getChildren().setAll(labelTitulo);
     }
 
+    protected void insertarTitulo2(String titulo, VBox vBox){
+        Label labelTitulo = new Label(titulo);
+        labelTitulo.getStyleClass().add("titulo-h2");
+        vBox.getChildren().setAll(labelTitulo);
+    }
+
     protected void insertarTexto(String titulo, VBox vBox){
         Label labelTitulo = new Label(titulo);
         labelTitulo.getStyleClass().add("titulo-p");
         vBox.getChildren().setAll(labelTitulo);
+    }
+
+    protected VBox insertarBox(){
+        VBox contenedor = new VBox();
+        contenedor.getStyleClass().add("perfil-box");
+        return contenedor;
+    }
+
+    protected VBox insertarBox( VBox contenido){
+        VBox contenedor = new VBox();
+        contenedor.getStyleClass().add("perfil-box");
+        contenedor.getChildren().setAll(contenido);
+        return contenedor;
     }
 
     public void closeWindow(ActionEvent event) {

@@ -8,6 +8,6 @@
         <VBox alignment="CENTER" spacing="15">
             <Label text="Bienvenido a tu Gestor de Finanzas como admin"/>
         </VBox>
-        <VBox fx:id="listaUsuarios" />
+        <VBox fx:id="listaUsuarios" styleClass="perfil-box" spacing="20" />
     </center>
 </BorderPane>
