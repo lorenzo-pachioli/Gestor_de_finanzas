@@ -1,28 +1,26 @@
 package app.controllersAdmin;
 
+import app.App;
 import app.controllers.Controller;
 import app.enums.NivelAcceso;
-import app.jsonUtils.JSONPersonas;
+import app.models.colecciones.ListaPersonas;
 import app.models.usuarios.Persona;
 import app.models.usuarios.Usuario;
 import javafx.fxml.FXML;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
 
 public class HomeAdminController extends Controller {
 
     @FXML
     private VBox listaUsuarios;
-    private final ArrayList<Persona> listaPersonas = JSONPersonas.leerPersonasArray();
+    private final ListaPersonas listaPersonas = App.getListaPersonas();
 
     @FXML
     public void initialize() {
         VBox titulo = new VBox();
         insertarTitulo2("Lista de usuarios", titulo);
         listaUsuarios.getChildren().add(titulo);
-        for (Persona persona : listaPersonas) {
+        for (Persona persona : listaPersonas.getListaPersonas()) {
             VBox bloquePersona = creacionFilaPersona(persona);
             listaUsuarios.getChildren().add(bloquePersona);
         }

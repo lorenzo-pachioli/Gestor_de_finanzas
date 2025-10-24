@@ -29,6 +29,9 @@ public class MasterLayoutAdminController {
         Persona persona = App.getPersona();
         if(!(persona instanceof Administrador)) App.changeScene("masterLayout.fxml");
 
+        // Carga la lista de usuarios
+        App.getListaPersonas().iniciarListaPersonas();
+
         // Establece la comunicación con el controlador del header
         if (headerAdminComponentController != null) headerAdminComponentController.setParentController(this);
         loadPage("admin/homeAdmin.fxml");

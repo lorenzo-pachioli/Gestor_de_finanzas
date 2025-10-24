@@ -1,15 +1,15 @@
 package app.jsonUtils;
 
 import app.enums.NivelAcceso;
+import app.models.colecciones.ListaGenerica;
+import app.models.extras.PasswordAuth;
 import app.models.usuarios.Administrador;
 import app.models.usuarios.Persona;
 import app.models.usuarios.Usuario;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import java.util.ArrayList;
+import java.util.UUID;
 
 
 public class JSONPersonas extends JSONUtiles {
@@ -20,15 +20,19 @@ public class JSONPersonas extends JSONUtiles {
         grabar(array, archivo);
     }
 
+    public static void grabarPersonas(ListaGenerica<Persona> listaPersonas){
+        grabar(escribirPersonasArray(listaPersonas), archivo);
+    }
+
     public static JSONArray leerPersonas(){
         return new JSONArray(leer(archivo));
     }
 
-    public static ArrayList<Persona> leerPersonasArray(){
-        ArrayList<Persona> listaPersonas = new ArrayList<>();
+    public static ListaGenerica<Persona> leerPersonasArray(){
+        ListaGenerica<Persona> listaPersonas = new ListaGenerica<>();
         JSONArray JSONPersonas = leerPersonas();
         for(int i=0 ; i<JSONPersonas.length() ; i++){
-            listaPersonas.add(jsonAPersona(JSONPersonas.getJSONObject(i)));
+            listaPersonas.agregar(jsonAPersona(JSONPersonas.getJSONObject(i)));
         }
         return listaPersonas;
     }
@@ -40,7 +44,7 @@ public class JSONPersonas extends JSONUtiles {
             for(int i = 0 ; i<jsonPersonas.length() ; i++){
                 JSONObject persona = jsonPersonas.getJSONObject(i);
 
-                if(persona.getString("email").equals(email) && persona.getString("contrasenia").equals(contrasenia)){
+                if(persona.getString("email").equals(email) && PasswordAuth.authenticate(contrasenia, persona.getString("contrasenia"))){
 
                     return jsonAPersona(persona);
                 }
@@ -54,6 +58,7 @@ public class JSONPersonas extends JSONUtiles {
 
     public static boolean registrarUsuario(Usuario usuario){
         JSONArray array = new JSONArray();
+        array = leerPersonas();
         JSONObject u = new JSONObject();
         u.put("id", usuario.getId());
         u.put("nombre", usuario.getNombre());
@@ -88,6 +93,7 @@ public class JSONPersonas extends JSONUtiles {
 
     public static Persona jsonAPersona(JSONObject persona){
 
+        String id = persona.getString("id");
         String nombre = persona.getString("nombre");
         String apellido = persona.getString("apellido");
         int dni = persona.getInt("dni");
@@ -96,8 +102,30 @@ public class JSONPersonas extends JSONUtiles {
         String contrasenia = persona.getString("contrasenia");
         String nivel = persona.getString("acceso");
         if(nivel.equalsIgnoreCase("USUARIO")){
-            return new Usuario(nombre, apellido, dni, email, telefono, contrasenia);
+            return new Usuario(UUID.fromString(id), nombre, apellido, dni, email, telefono, contrasenia);
         }
-        return new Administrador(nombre, apellido, dni, email, telefono, contrasenia);
+        return new Administrador(UUID.fromString(id), nombre, apellido, dni, email, telefono, contrasenia);
+    }
+
+
+    public static JSONArray escribirPersonasArray(ListaGenerica<Persona> listaPersonas){
+        JSONArray jsonListaPersonas = new JSONArray();
+        for(Persona persona : listaPersonas.getElementos()){
+            jsonListaPersonas.put(personaAJson(persona));
+        }
+        return jsonListaPersonas;
+    }
+
+    public static JSONObject personaAJson(Persona persona){
+        JSONObject jsonPersona = new JSONObject();
+        jsonPersona.put("id", persona.getId());
+        jsonPersona.put("nombre", persona.getNombre());
+        jsonPersona.put("apellido", persona.getApellido());
+        jsonPersona.put("dni", persona.getDni());
+        jsonPersona.put("telefono", persona.getTelefono());
+        jsonPersona.put("email", persona.getEmail());
+        jsonPersona.put("contrasenia", persona.getContrasenia());
+        jsonPersona.put("acceso", persona instanceof Usuario ? NivelAcceso.USUARIO:NivelAcceso.ADMINISTRADOR);
+        return jsonPersona;
     }
 }

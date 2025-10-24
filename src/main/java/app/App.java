@@ -1,7 +1,7 @@
 package app;
 
+import app.models.colecciones.ListaPersonas;
 import app.models.usuarios.Persona;
-import app.models.usuarios.Usuario;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,9 +15,13 @@ public class App extends Application {
 
     private static Stage stage;
     private static Persona persona;
+    private static ListaPersonas listaPersonas = new ListaPersonas();
 
     public static void main(String[] args) {
+
         launch(); // Arranca la app y abre la ventana
+
+        /*--------- Resolver actualizacion de json -----------------*/
     }
 
     @Override
@@ -54,4 +58,13 @@ public class App extends Application {
     public static void setPersona(Persona persona) {
         App.persona = persona;
     }
+
+    public static ListaPersonas getListaPersonas() {
+        return listaPersonas;
+    }
+
+    public static void setListaPersonas(ListaPersonas listaPersonas) {
+        App.listaPersonas = listaPersonas;
+    }
+
 }

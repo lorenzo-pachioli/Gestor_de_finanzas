@@ -1,6 +1,8 @@
 package app.models.usuarios;
 
 import app.App;
+import app.models.extras.PasswordAuth;
+
 import java.util.UUID;
 
 public abstract class Persona {
@@ -17,6 +19,16 @@ public abstract class Persona {
 
     public Persona(String nombre, String apellido, int dni, String email, int telefono, String contrasenia) {
         this.id = UUID.randomUUID();
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.email = email;
+        this.telefono = telefono;
+        this.contrasenia = PasswordAuth.hash(contrasenia);
+    }
+
+    public Persona(UUID id, String nombre, String apellido, int dni, String email, int telefono, String contrasenia) {
+        this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -74,7 +86,7 @@ public abstract class Persona {
     }
 
     public String getContrasenia() {
-        if(App.getPersona().equals(this)) return contrasenia;
+        if(App.getPersona().equals(this) || App.getPersona() instanceof Administrador) return this.contrasenia;
         return " No tiene acceso ";
     }
 
