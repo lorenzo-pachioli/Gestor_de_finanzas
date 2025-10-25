@@ -5,18 +5,17 @@ import app.models.TransaccionModel;
 import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
+import com.dlsc.formsfx.model.validators.CustomValidator;
+import com.dlsc.formsfx.model.validators.IntegerRangeValidator;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.cell.ChoiceBoxListCell;
 import javafx.scene.layout.VBox;
-
-import java.text.Normalizer;
 
 public class MovimientoController {
 
@@ -37,7 +36,7 @@ public class MovimientoController {
         this.model = new TransaccionModel();
 
         //Tipo de transferencia
-        ObservableList<String> opcionesTipo = FXCollections.observableArrayList("INGRESO", "GASTO");
+        ObservableList<String> opcionesTipo = FXCollections.observableArrayList("Ingreso", "Gasto");
         ListProperty<String> tiposProperty = new SimpleListProperty<>(opcionesTipo);
 
         //Metodo de pago
@@ -46,7 +45,7 @@ public class MovimientoController {
 
         //2. Construir el formulario con FormsFX
         this.transaccionForm = Form.of(
-                //Acomodar fecha, guardar.
+                //Guardar.
                 Group.of(
                         Field.ofSingleSelectionType(tiposProperty, model.tipoProperty())
                                 .label("Tipo de Transacción (INGRESO / GASTO)"),
@@ -56,8 +55,18 @@ public class MovimientoController {
                                 .label("Descripción"),
                         Field.ofDate(model.fechaProperty())
                                 .label("Fecha"),
+                        Field.ofIntegerType(model.horasProperty())
+                                .label("Horas")
+                                .validate(
+                                        IntegerRangeValidator.between(0,23,"La hora debe estar entre 0 y 23")
+                                ),
+                        Field.ofIntegerType(model.minutosProperty())
+                                .label("Minutos")
+                                .validate(
+                                        IntegerRangeValidator.between(0,59,"Los minutos deben estar entre 0 y 59")
+                                ),
                         Field.ofStringType(model.categoriaOFuenteProperty())
-                                .label("Motivo / Fuente"),
+                                .label("Motivo / Fuente"), // Actualizar dependiendo de el valor de tipoProperty
                         Field.ofSingleSelectionType(metodosProperty, model.metodoDePagoProperty())
                                 .label("Metodo de Pago")
                 )
