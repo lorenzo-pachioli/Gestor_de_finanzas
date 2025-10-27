@@ -76,6 +76,7 @@ public class EditarAtributoController extends Controller {
         } else if(atributo.equalsIgnoreCase("telefono")){
             App.getPersona().setTelefono(atributoInteger.get());
         }
+        App.getListaPersonas().modificarPersona(App.getPersona());
         closeWindow(event);
     }
 

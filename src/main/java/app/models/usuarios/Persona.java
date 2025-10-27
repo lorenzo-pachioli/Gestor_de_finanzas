@@ -86,8 +86,7 @@ public abstract class Persona {
     }
 
     public String getContrasenia() {
-        if(App.getPersona().equals(this) || App.getPersona() instanceof Administrador) return this.contrasenia;
-        return " No tiene acceso ";
+         return this.contrasenia;
     }
 
     public void setContrasenia(String contrasenia) {

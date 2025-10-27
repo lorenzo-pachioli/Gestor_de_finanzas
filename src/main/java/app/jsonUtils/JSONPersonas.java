@@ -2,6 +2,7 @@ package app.jsonUtils;
 
 import app.enums.NivelAcceso;
 import app.models.colecciones.ListaGenerica;
+import app.models.colecciones.ListaPersonas;
 import app.models.extras.PasswordAuth;
 import app.models.usuarios.Administrador;
 import app.models.usuarios.Persona;
@@ -20,8 +21,20 @@ public class JSONPersonas extends JSONUtiles {
         grabar(array, archivo);
     }
 
-    public static void grabarPersonas(ListaGenerica<Persona> listaPersonas){
-        grabar(escribirPersonasArray(listaPersonas), archivo);
+    public static void grabarPersonas(ListaPersonas listaPersonas){
+        JSONArray array = escribirPersonasArray(listaPersonas);
+        grabar(array, archivo);
+    }
+
+    public static void grabarUnaPersona(Persona persona){
+        JSONArray jsonLista = leerPersonas();
+        for(int i=0 ; i<jsonLista.length() ; i++){
+            JSONObject o = jsonLista.getJSONObject(i);
+            if(o.getString("id").equals(String.valueOf(persona.getId()))){
+                jsonLista.put(i, personaAJson(persona));
+            }
+        }
+        grabar(jsonLista, archivo);
     }
 
     public static JSONArray leerPersonas(){
@@ -108,9 +121,9 @@ public class JSONPersonas extends JSONUtiles {
     }
 
 
-    public static JSONArray escribirPersonasArray(ListaGenerica<Persona> listaPersonas){
+    public static JSONArray escribirPersonasArray(ListaPersonas listaPersonas){
         JSONArray jsonListaPersonas = new JSONArray();
-        for(Persona persona : listaPersonas.getElementos()){
+        for(Persona persona : listaPersonas.getListaPersonas()){
             jsonListaPersonas.put(personaAJson(persona));
         }
         return jsonListaPersonas;
@@ -126,6 +139,7 @@ public class JSONPersonas extends JSONUtiles {
         jsonPersona.put("email", persona.getEmail());
         jsonPersona.put("contrasenia", persona.getContrasenia());
         jsonPersona.put("acceso", persona instanceof Usuario ? NivelAcceso.USUARIO:NivelAcceso.ADMINISTRADOR);
+
         return jsonPersona;
     }
 }

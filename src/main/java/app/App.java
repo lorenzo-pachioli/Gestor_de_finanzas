@@ -18,10 +18,7 @@ public class App extends Application {
     private static ListaPersonas listaPersonas = new ListaPersonas();
 
     public static void main(String[] args) {
-
         launch(); // Arranca la app y abre la ventana
-
-        /*--------- Resolver actualizacion de json -----------------*/
     }
 
     @Override
