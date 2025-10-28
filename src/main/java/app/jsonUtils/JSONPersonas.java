@@ -37,6 +37,18 @@ public class JSONPersonas extends JSONUtiles {
         grabar(jsonLista, archivo);
     }
 
+    public static void borrarUnaPersona(Persona persona){
+        JSONArray jsonLista = leerPersonas();
+        JSONArray jsonListaNueva = new JSONArray();
+        for(int i=0 ; i<jsonLista.length() ; i++){
+            JSONObject o = jsonLista.getJSONObject(i);
+            if(!o.getString("id").equals(String.valueOf(persona.getId()))){
+                jsonListaNueva.put(o);
+            }
+        }
+        grabar(jsonListaNueva, archivo);
+    }
+
     public static JSONArray leerPersonas(){
         return new JSONArray(leer(archivo));
     }
@@ -81,6 +93,7 @@ public class JSONPersonas extends JSONUtiles {
         u.put("email", usuario.getEmail());
         u.put("contrasenia", usuario.getContrasenia());
         u.put("acceso", usuario.getAcceso());
+        u.put("bloqueado", usuario.isBloqueado());
         array.put(u);
         grabarPersonas(array);
         return true;
@@ -114,10 +127,11 @@ public class JSONPersonas extends JSONUtiles {
         String email = persona.getString("email");
         String contrasenia = persona.getString("contrasenia");
         String nivel = persona.getString("acceso");
+        boolean bloqueado = persona.getBoolean("bloqueado");
         if(nivel.equalsIgnoreCase("USUARIO")){
-            return new Usuario(UUID.fromString(id), nombre, apellido, dni, email, telefono, contrasenia);
+            return new Usuario(UUID.fromString(id), nombre, apellido, dni, email, telefono, contrasenia, bloqueado);
         }
-        return new Administrador(UUID.fromString(id), nombre, apellido, dni, email, telefono, contrasenia);
+        return new Administrador(UUID.fromString(id), nombre, apellido, dni, email, telefono, contrasenia, bloqueado);
     }
 
 
@@ -139,6 +153,7 @@ public class JSONPersonas extends JSONUtiles {
         jsonPersona.put("email", persona.getEmail());
         jsonPersona.put("contrasenia", persona.getContrasenia());
         jsonPersona.put("acceso", persona instanceof Usuario ? NivelAcceso.USUARIO:NivelAcceso.ADMINISTRADOR);
+        jsonPersona.put("bloqueado", persona.isBloqueado());
 
         return jsonPersona;
     }

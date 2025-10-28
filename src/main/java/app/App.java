@@ -1,6 +1,8 @@
 package app;
 
+import app.jsonUtils.JSONPersonas;
 import app.models.colecciones.ListaPersonas;
+import app.models.usuarios.Administrador;
 import app.models.usuarios.Persona;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +21,12 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch(); // Arranca la app y abre la ventana
+
+        /*
+        * Que es mas eficiente:
+        * 1) modificar la lista en java y despues pisar todoe el json
+        * 2) mosificar el elemnto en el json y despues pisar la lista en java
+        * */
     }
 
     @Override
@@ -57,11 +65,13 @@ public class App extends Application {
     }
 
     public static ListaPersonas getListaPersonas() {
-        return listaPersonas;
+        if(persona instanceof Administrador){
+            return listaPersonas;
+        }
+        return new ListaPersonas();
     }
 
     public static void setListaPersonas(ListaPersonas listaPersonas) {
-        App.listaPersonas = listaPersonas;
+        if(persona instanceof Administrador) App.listaPersonas = listaPersonas;
     }
-
 }

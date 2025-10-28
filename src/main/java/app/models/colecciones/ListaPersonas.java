@@ -36,6 +36,12 @@ public class ListaPersonas {
 
     public  void modificarPersona(Persona persona){
         JSONPersonas.grabarUnaPersona(persona);
+        iniciarListaPersonas();
+    }
+
+    public void borrarPersona(Persona persona){
+        JSONPersonas.borrarUnaPersona(persona);
+        iniciarListaPersonas();
     }
 
     @Override

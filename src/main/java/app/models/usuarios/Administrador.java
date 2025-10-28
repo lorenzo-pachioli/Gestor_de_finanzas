@@ -12,8 +12,8 @@ public class Administrador extends Persona{
         super(nombre, apellido, dni, email, telefono, contrasenia);
     }
 
-    public Administrador(UUID id, String nombre, String apellido, int dni, String email, int telefono, String contrasenia) {
-        super(id, nombre, apellido, dni, email, telefono, contrasenia);
+    public Administrador(UUID id, String nombre, String apellido, int dni, String email, int telefono, String contrasenia, boolean bloqueado) {
+        super(id, nombre, apellido, dni, email, telefono, contrasenia, bloqueado);
     }
 
 
