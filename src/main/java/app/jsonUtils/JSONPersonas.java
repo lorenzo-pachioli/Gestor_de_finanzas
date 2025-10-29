@@ -81,22 +81,21 @@ public class JSONPersonas extends JSONUtiles {
         }
     }
 
-    public static boolean registrarUsuario(Usuario usuario){
+    public static void registrarPersona(Persona persona){
         JSONArray array = new JSONArray();
         array = leerPersonas();
         JSONObject u = new JSONObject();
-        u.put("id", usuario.getId());
-        u.put("nombre", usuario.getNombre());
-        u.put("apellido", usuario.getApellido());
-        u.put("dni", usuario.getDni());
-        u.put("telefono", usuario.getTelefono());
-        u.put("email", usuario.getEmail());
-        u.put("contrasenia", usuario.getContrasenia());
-        u.put("acceso", usuario.getAcceso());
-        u.put("bloqueado", usuario.isBloqueado());
+        u.put("id", persona.getId());
+        u.put("nombre", persona.getNombre());
+        u.put("apellido", persona.getApellido());
+        u.put("dni", persona.getDni());
+        u.put("telefono", persona.getTelefono());
+        u.put("email", persona.getEmail());
+        u.put("contrasenia", persona.getContrasenia());
+        u.put("acceso", persona instanceof Usuario ? NivelAcceso.USUARIO:NivelAcceso.ADMINISTRADOR);
+        u.put("bloqueado", persona.isBloqueado());
         array.put(u);
         grabarPersonas(array);
-        return true;
     }
 
     public static boolean existeusuario(String email){

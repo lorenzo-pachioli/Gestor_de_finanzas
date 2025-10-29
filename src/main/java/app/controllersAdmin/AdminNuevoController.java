@@ -1,19 +1,22 @@
-package app.controllers;
+package app.controllersAdmin;
 
 import app.App;
+import app.controllers.Controller;
+import app.models.usuarios.Administrador;
 import app.models.usuarios.RegistroModel;
 import app.models.usuarios.Usuario;
 import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 
 import static app.jsonUtils.JSONPersonas.*;
 
-public class RegistroController extends Controller {
+public class AdminNuevoController extends Controller {
 
     @FXML
     private VBox formContainer;
@@ -26,7 +29,7 @@ public class RegistroController extends Controller {
 
     @FXML
     public void initialize() {
-        insertarTitulo("Crear usuario", this.seccionTitulo);
+        insertarTitulo("Crear administrador", this.seccionTitulo);
 
         // 1. Crear el modelo de datos
         this.model = new RegistroModel();
@@ -57,7 +60,7 @@ public class RegistroController extends Controller {
     }
 
     @FXML
-    private void handleRegistro() throws Exception  {
+    private void handleCrearAdmin() {
 
         registroForm.persist();
 
@@ -73,13 +76,11 @@ public class RegistroController extends Controller {
             String repetirContrasenia = model.repetirContraseniaProperty().get();
 
             if(contrasenia.compareTo(repetirContrasenia) == 0){
-                Usuario usuario = new Usuario(nombre, apellido, dni, email, telefono, contrasenia);
-
                 // Verifica si existe y si no existe lo guerda
                 if(!existeusuario(email)){
-                    registrarPersona(usuario);
-                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Usuario creado con exito");
-                    App.changeScene("logIn.fxml");
+                    Administrador administrador = new Administrador(nombre, apellido, dni, email, telefono, contrasenia);
+                    registrarPersona(administrador);
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Administrador creado con exito");
                 } else {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Ya existe un usuario con ese mail");
                 }
@@ -89,9 +90,5 @@ public class RegistroController extends Controller {
         } else {
             mostrarAlerta(Alert.AlertType.WARNING, "Error de validación", "Por favor, corrige los errores del formulario.");
         }
-    }
-
-    public void handleVolverALogin(){
-        App.changeScene("logIn.fxml");
     }
 }
