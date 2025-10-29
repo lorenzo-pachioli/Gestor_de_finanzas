@@ -1,14 +1,14 @@
 package app.controllers;
 
 import app.enums.MetodoDePago;
-import app.models.TransaccionModel;
+import app.models.transacciones.Gasto;
+import app.models.transacciones.Ingreso;
+import app.models.transacciones.TransaccionModel;
 import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
-import com.dlsc.formsfx.model.validators.CustomValidator;
 import com.dlsc.formsfx.model.validators.IntegerRangeValidator;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -16,6 +16,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+
+import java.time.LocalDate;
 
 public class MovimientoController {
 
@@ -74,6 +76,27 @@ public class MovimientoController {
 
         FormRenderer formRenderer = new FormRenderer(transaccionForm);
         formContainer.getChildren().add(formRenderer);
+    }
+
+    private void handleGuardar(){
+        transaccionForm.persist();
+
+        if(transaccionForm.isValid()){
+            String tipo = model.tipoProperty().get();
+            double monto = model.montoProperty().get();
+            String descripcion = model.descripcionProperty().get();
+            LocalDate fecha = model.fechaProperty().get();
+            int horas = model.horasProperty().get();
+            int minutos = model.minutosProperty().get();
+            String categoriaOFuente = model.categoriaOFuenteProperty().get();
+            MetodoDePago metodoDePago = model.metodoDePagoProperty().get();
+
+            if(tipo.equals("Ingreso")){
+                Ingreso ingreso = new Ingreso(monto, fecha, horas, minutos, descripcion, metodoDePago, categoriaOFuente);
+            }else{
+                Gasto gasto = new Gasto(monto, fecha, horas, minutos, descripcion, metodoDePago, categoriaOFuente);
+            }
+        }
     }
 
     private void insertarTitulo(){

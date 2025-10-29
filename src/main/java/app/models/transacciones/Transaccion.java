@@ -1,12 +1,15 @@
 package app.models.transacciones;
 
+import app.App;
 import app.enums.MetodoDePago;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public abstract class Transaccion {
     private UUID id;
+    private UUID personaID;
     private double monto;
     private LocalDateTime fecha;
     private String descripcion;
@@ -17,10 +20,11 @@ public abstract class Transaccion {
         this.fecha = LocalDateTime.now();
     }
 
-    public Transaccion(double monto, String descripcion, MetodoDePago metodoDePago) {
+    public Transaccion(double monto, LocalDate fecha, int horas, int minutos, String descripcion, MetodoDePago metodoDePago) {
         this.id = UUID.randomUUID();
+        this.personaID = App.getPersona().getId();
         this.monto = monto;
-        this.fecha = LocalDateTime.now();
+        this.fecha = fecha.atTime(horas, minutos);
         this.descripcion = descripcion;
         this.metodoDePago = metodoDePago;
     }
@@ -29,6 +33,7 @@ public abstract class Transaccion {
     public String toString() {
         return "Transaccion{" +
                 "id=" + id +
+                ", personaID=" + personaID +
                 ", monto=" + monto +
                 ", fecha=" + fecha +
                 ", descripcion='" + descripcion + '\'' +
@@ -42,6 +47,14 @@ public abstract class Transaccion {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public UUID getPersonaID() {
+        return personaID;
+    }
+
+    public void setPersonaID(UUID personaID) {
+        this.personaID = personaID;
     }
 
     public double getMonto() {

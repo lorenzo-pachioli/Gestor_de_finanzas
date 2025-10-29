@@ -3,11 +3,13 @@ package app.models.transacciones;
 import app.enums.FuenteIngreso;
 import app.enums.MetodoDePago;
 
+import java.time.LocalDate;
+
 public class Ingreso extends Transaccion{
     private FuenteIngreso fuenteIngreso;
 
-    public Ingreso(double monto, String descripcion, MetodoDePago metodoDePago, String fuenteIngreso) {
-        super(monto, descripcion, metodoDePago);
+    public Ingreso(double monto, LocalDate fecha, int horas, int minutos, String descripcion, MetodoDePago metodoDePago, String fuenteIngreso) {
+        super(monto, fecha, horas, minutos, descripcion, metodoDePago);
         this.fuenteIngreso = FuenteIngreso.valueOf(fuenteIngreso);
     }
 

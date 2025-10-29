@@ -1,9 +1,6 @@
-package app.models;
+package app.models.transacciones;
 
 import app.enums.MetodoDePago;
-import app.models.transacciones.Gasto;
-import app.models.transacciones.Ingreso;
-import app.models.transacciones.Transaccion;
 import javafx.beans.property.*;
 
 import java.time.LocalDate;
@@ -28,15 +25,4 @@ public class TransaccionModel {
     public ObjectProperty<LocalDate> fechaProperty() { return fecha; }
     public IntegerProperty horasProperty() { return horas; }
     public IntegerProperty minutosProperty() { return minutos; }
-
-    public Transaccion build() {
-        Transaccion transaccion;
-        if ("INGRESO".equalsIgnoreCase(tipo.get())) {
-            transaccion = new Ingreso(monto.get(), descripcion.get(), metodoDePago.get(), MotivoOFuente.get());
-        } else {
-            transaccion = new Gasto(monto.get(), descripcion.get(), metodoDePago.get(), MotivoOFuente.get());
-        }
-        transaccion.setFecha(fecha.get().atTime(horas.get(), minutos.get()));
-        return transaccion;
-    }
 }
