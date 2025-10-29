@@ -60,7 +60,9 @@ public class LogInController extends Controller {
             String contrasenia = model.passwordProperty().get();
 
             Persona persona = logInPersona(email, contrasenia);
-            if (persona.isValid()) {
+            if(persona.isBloqueado()){
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "La cuenta del usuario ingresado está bloqueada.");
+            }else if(persona.isValid()) {
                 App.setPersona(persona);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Inicio de sesión correcto.");
                 redireccionSegunAcceso(persona);

@@ -1,6 +1,5 @@
 package app;
 
-import app.jsonUtils.JSONPersonas;
 import app.models.colecciones.ListaPersonas;
 import app.models.usuarios.Administrador;
 import app.models.usuarios.Persona;
@@ -16,17 +15,11 @@ import java.net.URL;
 public class App extends Application {
 
     private static Stage stage;
-    private static Persona persona;
-    private static ListaPersonas listaPersonas = new ListaPersonas();
+    public static Persona persona;
+    public static ListaPersonas listaPersonas = new ListaPersonas();
 
     public static void main(String[] args) {
         launch(); // Arranca la app y abre la ventana
-
-        /*
-        * Que es mas eficiente:
-        * 1) modificar la lista en java y despues pisar todoe el json
-        * 2) mosificar el elemnto en el json y despues pisar la lista en java
-        * */
     }
 
     @Override
@@ -56,19 +49,8 @@ public class App extends Application {
         }
     }
 
-    public static Persona getPersona() {
-        return persona;
-    }
-
     public static void setPersona(Persona persona) {
         App.persona = persona;
-    }
-
-    public static ListaPersonas getListaPersonas() {
-        if(persona instanceof Administrador){
-            return listaPersonas;
-        }
-        return new ListaPersonas();
     }
 
     public static void setListaPersonas(ListaPersonas listaPersonas) {

@@ -106,7 +106,7 @@ public abstract class Persona {
     }
 
     public void setBloqueado(boolean bloqueado) {
-        if (App.getPersona() instanceof Administrador) {
+        if (App.persona instanceof Administrador) {
             this.bloqueado = bloqueado;
             JSONPersonas.grabarUnaPersona(this);
         }

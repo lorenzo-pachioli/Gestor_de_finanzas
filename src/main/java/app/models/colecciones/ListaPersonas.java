@@ -1,6 +1,8 @@
 package app.models.colecciones;
 
+import app.App;
 import app.jsonUtils.JSONPersonas;
+import app.models.usuarios.Administrador;
 import app.models.usuarios.Persona;
 import java.util.ArrayList;
 
@@ -21,7 +23,8 @@ public class ListaPersonas {
     }
 
     public ArrayList<Persona> getListaPersonas() {
-        return listaPersonas.getElementos();
+        if (App.persona instanceof Administrador) return listaPersonas.getElementos();
+        return new ArrayList<>();
     }
 
     public void setListaPersonas(ListaGenerica<Persona> listaPersonas) {

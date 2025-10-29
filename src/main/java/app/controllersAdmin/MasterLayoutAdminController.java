@@ -26,11 +26,11 @@ public class MasterLayoutAdminController {
     public void initialize() {
 
         //Verifica si realmente tiene acceso, y si no lo tiene lo redirecciona a la app de Usuarios
-        Persona persona = App.getPersona();
+        Persona persona = App.persona;
         if(!(persona instanceof Administrador)) App.changeScene("masterLayout.fxml");
 
         // Carga la lista de usuarios
-        App.getListaPersonas().iniciarListaPersonas();
+        App.listaPersonas.iniciarListaPersonas();
 
         // Establece la comunicación con el controlador del header
         if (headerAdminComponentController != null) headerAdminComponentController.setParentController(this);

@@ -38,7 +38,7 @@ public class HomeAdminController extends Controller {
 
     private void iniciarListaPersonas() {
         this.listaUsuarios.getChildren().clear();
-        ListaPersonas listaPersonas = App.getListaPersonas();
+        ListaPersonas listaPersonas = App.listaPersonas;
         ;
         VBox titulo = new VBox();
         insertarTitulo2("Lista de usuarios", titulo);
@@ -82,7 +82,7 @@ public class HomeAdminController extends Controller {
         borrar.setOnMouseClicked(event -> {
             boolean confirmacion = mostrarAlerta(Alert.AlertType.WARNING, ("Borrar usuario " + persona.getNombre()), ("Esta seguro que quiere borrar el usuario con mail: " + persona.getEmail()));
             if (confirmacion) {
-                App.getListaPersonas().borrarPersona(persona);
+                App.listaPersonas.borrarPersona(persona);
                 this.iniciarListaPersonas();
             }
         });

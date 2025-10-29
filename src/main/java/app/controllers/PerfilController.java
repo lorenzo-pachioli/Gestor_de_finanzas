@@ -39,7 +39,7 @@ public class PerfilController extends Controller {
 
     private void cargarInformacion() {
 
-        Persona persona = App.getPersona();
+        Persona persona = App.persona;
         if (persona != null) {
             insertarTexto(persona.getNombre(), this.seccionNombre);
             insertarTexto(persona.getApellido(), this.seccionApellido);

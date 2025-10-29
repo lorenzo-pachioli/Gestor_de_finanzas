@@ -64,19 +64,19 @@ public class EditarAtributoController extends Controller {
     private void handleConfirmar(ActionEvent event){
         editForm.persist();
         if(atributo.equalsIgnoreCase("nombre")){
-            App.getPersona().setNombre(atributoString.get());
+            App.persona.setNombre(atributoString.get());
         } else if(atributo.equalsIgnoreCase("apellido")){
-            App.getPersona().setApellido(atributoString.get());
+            App.persona.setApellido(atributoString.get());
         } else if(atributo.equalsIgnoreCase("email")){
-            App.getPersona().setEmail(atributoString.get());
+            App.persona.setEmail(atributoString.get());
         } else if(atributo.equalsIgnoreCase("contrasenia")){
-            App.getPersona().setContrasenia(atributoString.get());
+            App.persona.setContrasenia(atributoString.get());
         } else if(atributo.equalsIgnoreCase("dni")){
-            App.getPersona().setDni(atributoInteger.get());
+            App.persona.setDni(atributoInteger.get());
         } else if(atributo.equalsIgnoreCase("telefono")){
-            App.getPersona().setTelefono(atributoInteger.get());
+            App.persona.setTelefono(atributoInteger.get());
         }
-        App.getListaPersonas().modificarPersona(App.getPersona());
+        App.listaPersonas.modificarPersona(App.persona);
         closeWindow(event);
     }
 
@@ -84,17 +84,17 @@ public class EditarAtributoController extends Controller {
     private void setAtributoPropertyInicial(){
 
         if(atributo.equalsIgnoreCase("nombre")){
-            atributoString.set(App.getPersona().getNombre());
+            atributoString.set(App.persona.getNombre());
         } else if(atributo.equalsIgnoreCase("apellido")){
-            atributoString.set(App.getPersona().getApellido());
+            atributoString.set(App.persona.getApellido());
         } else if(atributo.equalsIgnoreCase("email")){
-            atributoString.set(App.getPersona().getEmail());
+            atributoString.set(App.persona.getEmail());
         } else if(atributo.equalsIgnoreCase("contrasenia")){
-            atributoString.set(App.getPersona().getContrasenia());
+            atributoString.set(App.persona.getContrasenia());
         } else if(atributo.equalsIgnoreCase("dni")){
-            atributoInteger.set(App.getPersona().getDni());
+            atributoInteger.set(App.persona.getDni());
         } else if(atributo.equalsIgnoreCase("telefono")){
-            atributoInteger.set(App.getPersona().getTelefono());
+            atributoInteger.set(App.persona.getTelefono());
         }
     }
 
