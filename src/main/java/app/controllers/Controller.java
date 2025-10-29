@@ -1,15 +1,13 @@
 package app.controllers;
 
-import javafx.fxml.FXML;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public abstract class Controller {
-
-    @FXML
-    protected VBox seccionTitulo;
-
 
     protected void mostrarAlerta(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
@@ -19,9 +17,21 @@ public abstract class Controller {
         alert.showAndWait();
     }
 
-    protected void insertarTitulo(String titulo){
+    protected void insertarTitulo(String titulo, VBox vBox){
         Label labelTitulo = new Label(titulo);
         labelTitulo.getStyleClass().add("titulo-h1");
-        seccionTitulo.getChildren().setAll(labelTitulo);
+        vBox.getChildren().setAll(labelTitulo);
+    }
+
+    protected void insertarTexto(String titulo, VBox vBox){
+        Label labelTitulo = new Label(titulo);
+        labelTitulo.getStyleClass().add("titulo-p");
+        vBox.getChildren().setAll(labelTitulo);
+    }
+
+    public void closeWindow(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 }

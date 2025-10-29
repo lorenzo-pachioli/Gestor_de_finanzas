@@ -1,18 +1,20 @@
 package app.controllers;
 
 import app.App;
-import app.models.LoginModel;
+import app.models.usuarios.Administrador;
+import app.models.usuarios.LoginModel;
+import app.models.usuarios.Persona;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
 
-public class LogInController {
+import static app.jsonUtils.JSONPersonas.logInPersona;
+
+public class LogInController extends Controller {
 
     @FXML
     private VBox formContainer;
@@ -26,7 +28,7 @@ public class LogInController {
     @FXML
     public void initialize() {
 
-        insertarTitulo();
+        insertarTitulo("Gestor de finanzas", this.seccionTitulo);
 
         // 1. Crear el modelo de datos
         this.model = new LoginModel();
@@ -34,8 +36,8 @@ public class LogInController {
         // 2. Construir el formulario con FormsFX
         this.loginForm = Form.of(
                 Group.of(
-                        Field.ofStringType(model.usernameProperty())
-                                .label("Usuario"),
+                        Field.ofStringType(model.emailProperty())
+                                .label("Email"),
                         Field.ofStringType(model.passwordProperty())
                                 .label("Contraseña")
                 )
@@ -47,19 +49,21 @@ public class LogInController {
     }
 
     @FXML
-    private void handleLoginButtonAction() throws Exception  {
+    private void handleLogin() {
 
         loginForm.persist();
 
         // Validar el formulario antes de procesar
         if (loginForm.isValid()) {
-            // Lógica de autenticación real
-            String username = model.usernameProperty().get();
-            String password = model.passwordProperty().get();
+            // Lógica de autenticación
+            String email = model.emailProperty().get();
+            String contrasenia = model.passwordProperty().get();
 
-            if (username.compareTo("admin") == 0 && password.compareTo("pass123") == 0) {
+            Persona persona = logInPersona(email, contrasenia);
+            if (persona.isValid()) {
+                App.setPersona(persona);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Inicio de sesión correcto.");
-                App.changeScene("masterLayout.fxml");
+                redireccionSegunAcceso(persona);
             } else {
                 mostrarAlerta(Alert.AlertType.ERROR, "Error", "Usuario o contraseña incorrectos.");
             }
@@ -68,18 +72,18 @@ public class LogInController {
         }
     }
 
-    private void mostrarAlerta(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    private void redireccionSegunAcceso(Persona persona){
+        if(persona instanceof Administrador) {
+            //Ingreso a aplicacion Admin
+            App.changeScene("admin/masterLayoutAdmin.fxml");
+        } else {
+            //Ingreso a aplicacion Usuario
+            App.changeScene("masterLayout.fxml");
+        }
     }
 
-    private void insertarTitulo(){
-        Label titulo = new Label("Gestor de Finanzas");
-        titulo.getStyleClass().add("titulo-h1");
-        seccionTitulo.getChildren().setAll(titulo);
+    @FXML
+    private void handleRegistro() {
+        App.changeScene("registro.fxml");
     }
-
 }

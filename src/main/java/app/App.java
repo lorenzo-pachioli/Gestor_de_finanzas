@@ -1,5 +1,7 @@
 package app;
 
+import app.models.usuarios.Persona;
+import app.models.usuarios.Usuario;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,31 +13,41 @@ import java.net.URL;
 public class App extends Application {
 
     private static Stage stage;
+    private static Persona persona;
 
     public static void main(String[] args) {
         launch(); // Arranca la app y abre la ventana
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        try{
+    public void start(Stage primaryStage) {
             stage = primaryStage;
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("logIn.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 620, 640);
+            stage.setTitle("Gestor de Finanzas");
+            App.changeScene("logIn.fxml");
+            stage.show();
+    }
+
+    // Metodo para cambiar la escena dentro de App(ventana completa)
+    public static void changeScene(String fxml) {
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
+            Scene scene = null;
+            scene = new Scene(fxmlLoader.load(), 620, 640);
             URL cssUrl = App.class.getResource("styles.css");
             assert cssUrl != null;
             scene.getStylesheets().add(cssUrl.toExternalForm());
-            stage.setTitle("Gestor de Finanzas");
             stage.setScene(scene);
-            stage.show();
-        } catch (IOException e){
-            System.out.println("Error: " + e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public static void changeScene(String fxml) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
-        Scene scene = new Scene(fxmlLoader.load(), 620, 640);
-        stage.setScene(scene);
+    public static Persona getPersona() {
+        return persona;
+    }
+
+    public static void setPersona(Persona persona) {
+        App.persona = persona;
     }
 }

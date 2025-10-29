@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="app.controllers.HomeController">
     <center>
         <VBox alignment="CENTER" spacing="15">
-            <Label text="Bienvenido a tu Gestor de Finanzas"/>
-            <Label text="Balance del mes:"/>
-            <ProgressBar progress="0.5"/>
+            <Label text="Bienvenido a tu Gestor de Finanzas como admin"/>
         </VBox>
     </center>
 </BorderPane>
-

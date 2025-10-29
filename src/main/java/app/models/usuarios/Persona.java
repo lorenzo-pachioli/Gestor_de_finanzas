@@ -1,5 +1,6 @@
 package app.models.usuarios;
 
+import app.App;
 import java.util.UUID;
 
 public abstract class Persona {
@@ -9,14 +10,19 @@ public abstract class Persona {
     private int dni;
     private String email;
     private int telefono;
+    private String contrasenia;
 
-    public Persona(String nombre, String apellido, int dni, String email, int telefono) {
-        this.id = UUID.fromString(nombre + apellido + dni);
+    public Persona() {
+    }
+
+    public Persona(String nombre, String apellido, int dni, String email, int telefono, String contrasenia) {
+        this.id = UUID.randomUUID();
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.email = email;
         this.telefono = telefono;
+        this.contrasenia = contrasenia;
     }
 
     public UUID getId() {
@@ -65,5 +71,47 @@ public abstract class Persona {
 
     public void setTelefono(int telefono) {
         this.telefono = telefono;
+    }
+
+    public String getContrasenia() {
+        if(App.getPersona().equals(this)) return contrasenia;
+        return " No tiene acceso ";
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+        Persona persona = (Persona) o;
+        return nombre.compareTo(persona.getNombre()) == 0 && dni == persona.dni;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", dni=" + dni +
+                ", email='" + email + '\'' +
+                ", telefono=" + telefono +
+                ", ";
+    }
+
+
+    public boolean isValid(){
+        if(
+                this.id != null &&
+                this.nombre != null &&
+                this.apellido != null &&
+                this.contrasenia != null &&
+                this.email != null ){
+            return true;
+        }
+        return false;
     }
 }

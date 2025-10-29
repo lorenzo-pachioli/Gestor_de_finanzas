@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:controller="app.controllersAdmin.HeaderAdminController" xmlns:fx="http://javafx.com/fxml">
+<ToolBar style="-fx-spacing: 100;">
+    <HBox style="-fx-spacing: 5;">
+        <Button text="Inicio"  onAction="#handleHomeAdminSelected" />
+        <Button text="Perfil" onAction="#handlePerfilAdminSelected"/>
+    </HBox>
+    <Button text="Cerrar sesion" onAction="#handleCerrarSesionAdminSelected" styleClass="cerrar-sesion"/>
+</ToolBar>
+</VBox>

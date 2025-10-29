@@ -9,9 +9,12 @@ module app.demo {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires org.json;
 
     opens app to javafx.fxml;
     exports app;
     exports app.controllers;
     opens app.controllers to javafx.fxml;
+    exports app.controllersAdmin;
+    opens app.controllersAdmin to javafx.fxml;
 }
