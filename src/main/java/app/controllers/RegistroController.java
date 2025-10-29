@@ -1,6 +1,8 @@
 package app.controllers;
 
 import app.App;
+import app.models.excepciones.FormularioIncorrectoException;
+import app.models.excepciones.UsuarioYaExisteException;
 import app.models.usuarios.RegistroModel;
 import app.models.usuarios.Usuario;
 import com.dlsc.formsfx.model.structure.Field;
@@ -57,12 +59,15 @@ public class RegistroController extends Controller {
     }
 
     @FXML
-    private void handleRegistro() throws Exception  {
+    private void handleRegistro() throws Exception {
 
         registroForm.persist();
 
-        // Validar el formulario antes de procesar
-        if (registroForm.isValid()) {
+        try {
+
+            // Validar el formulario antes de procesar
+            if (!registroForm.isValid()) throw new FormularioIncorrectoException("Por favor, corrige los errores del formulario.");
+
             // Lógica de autenticación real
             String nombre = model.nombreProperty().get();
             String apellido = model.apellidoProperty().get();
@@ -72,26 +77,25 @@ public class RegistroController extends Controller {
             String contrasenia = model.contraseniaProperty().get();
             String repetirContrasenia = model.repetirContraseniaProperty().get();
 
-            if(contrasenia.compareTo(repetirContrasenia) == 0){
-                Usuario usuario = new Usuario(nombre, apellido, dni, email, telefono, contrasenia);
+            // Verifica si existe
+            if (contrasenia.compareTo(repetirContrasenia) != 0) throw new FormularioIncorrectoException("Las contraseñas ingresadas no coinciden.");
+            if (existeusuario(email)) throw new UsuarioYaExisteException("Ya existe un usuario con ese mail");
 
-                // Verifica si existe y si no existe lo guerda
-                if(!existeusuario(email)){
-                    registrarPersona(usuario);
-                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Usuario creado con exito");
-                    App.changeScene("logIn.fxml");
-                } else {
-                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Ya existe un usuario con ese mail");
-                }
-            } else {
-                mostrarAlerta(Alert.AlertType.WARNING, "Error de validación", "Por favor, corrige los errores del formulario.");
-            }
-        } else {
-            mostrarAlerta(Alert.AlertType.WARNING, "Error de validación", "Por favor, corrige los errores del formulario.");
+            // si no existe lo guerda
+            Usuario usuario = new Usuario(nombre, apellido, dni, email, telefono, contrasenia);
+            registrarPersona(usuario);
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Usuario creado con exito");
+
+            //Redirige al login
+            App.changeScene("logIn.fxml");
+        } catch (UsuarioYaExisteException e) {
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", e.getMessage());
+        } catch (FormularioIncorrectoException e) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Error de validación", e.getMessage());
         }
     }
 
-    public void handleVolverALogin(){
+    public void handleVolverALogin() {
         App.changeScene("logIn.fxml");
     }
 }

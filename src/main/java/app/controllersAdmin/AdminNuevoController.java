@@ -2,14 +2,14 @@ package app.controllersAdmin;
 
 import app.App;
 import app.controllers.Controller;
+import app.models.excepciones.FormularioIncorrectoException;
+import app.models.excepciones.UsuarioYaExisteException;
 import app.models.usuarios.Administrador;
 import app.models.usuarios.RegistroModel;
-import app.models.usuarios.Usuario;
 import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
@@ -64,8 +64,12 @@ public class AdminNuevoController extends Controller {
 
         registroForm.persist();
 
-        // Validar el formulario antes de procesar
-        if (registroForm.isValid()) {
+        try {
+
+            // Validar el formulario antes de procesar
+            if (!registroForm.isValid())
+                throw new FormularioIncorrectoException("Por favor, corrige los errores del formulario.");
+
             // Lógica de autenticación real
             String nombre = model.nombreProperty().get();
             String apellido = model.apellidoProperty().get();
@@ -75,20 +79,20 @@ public class AdminNuevoController extends Controller {
             String contrasenia = model.contraseniaProperty().get();
             String repetirContrasenia = model.repetirContraseniaProperty().get();
 
-            if(contrasenia.compareTo(repetirContrasenia) == 0){
-                // Verifica si existe y si no existe lo guerda
-                if(!existeusuario(email)){
-                    Administrador administrador = new Administrador(nombre, apellido, dni, email, telefono, contrasenia);
-                    registrarPersona(administrador);
-                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Administrador creado con exito");
-                } else {
-                    mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Ya existe un usuario con ese mail");
-                }
-            } else {
-                mostrarAlerta(Alert.AlertType.WARNING, "Error de validación", "Por favor, corrige los errores del formulario.");
-            }
-        } else {
-            mostrarAlerta(Alert.AlertType.WARNING, "Error de validación", "Por favor, corrige los errores del formulario.");
+            // Verifica si existe
+            if (contrasenia.compareTo(repetirContrasenia) != 0)
+                throw new FormularioIncorrectoException("Las contraseñas ingresadas no coinciden.");
+            if (existeusuario(email)) throw new UsuarioYaExisteException("Ya existe un usuario con ese mail");
+
+            // si no existe lo guerda
+            Administrador administrador = new Administrador(nombre, apellido, dni, email, telefono, contrasenia);
+            registrarPersona(administrador);
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Usuario creado con exito");
+
+        } catch (UsuarioYaExisteException e) {
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", e.getMessage());
+        } catch (FormularioIncorrectoException e) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Error de validación", e.getMessage());
         }
     }
 }
