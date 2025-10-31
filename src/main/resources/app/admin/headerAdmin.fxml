@@ -7,6 +7,7 @@
 <ToolBar style="-fx-spacing: 100;">
     <HBox style="-fx-spacing: 5;">
         <Button text="Inicio"  onAction="#handleHomeAdminSelected" />
+        <Button text="Crear Admin"  onAction="#handleUsuarioNuevoSelected" />
         <Button text="Perfil" onAction="#handlePerfilAdminSelected"/>
     </HBox>
     <Button text="Cerrar sesion" onAction="#handleCerrarSesionAdminSelected" styleClass="cerrar-sesion"/>

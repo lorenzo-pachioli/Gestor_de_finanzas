@@ -19,6 +19,13 @@ public class HeaderAdminController {
     }
 
     @FXML
+    private void handleUsuarioNuevoSelected(ActionEvent event) {
+        if (parentController != null) {
+            parentController.loadPage("admin/adminNuevo.fxml");
+        }
+    }
+
+    @FXML
     private void handlePerfilAdminSelected(ActionEvent event) {
         if (parentController != null) {
             parentController.loadPage("perfil.fxml");

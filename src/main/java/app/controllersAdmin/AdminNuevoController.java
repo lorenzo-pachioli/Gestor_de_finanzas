@@ -1,10 +1,11 @@
-package app.controllers;
+package app.controllersAdmin;
 
 import app.App;
+import app.controllers.Controller;
 import app.models.excepciones.FormularioIncorrectoException;
 import app.models.excepciones.UsuarioYaExisteException;
+import app.models.usuarios.Administrador;
 import app.models.usuarios.RegistroModel;
-import app.models.usuarios.Usuario;
 import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
@@ -15,7 +16,7 @@ import javafx.scene.layout.VBox;
 
 import static app.jsonUtils.JSONPersonas.*;
 
-public class RegistroController extends Controller {
+public class AdminNuevoController extends Controller {
 
     @FXML
     private VBox formContainer;
@@ -28,7 +29,7 @@ public class RegistroController extends Controller {
 
     @FXML
     public void initialize() {
-        insertarTitulo("Crear usuario", this.seccionTitulo);
+        insertarTitulo("Crear administrador", this.seccionTitulo);
 
         // 1. Crear el modelo de datos
         this.model = new RegistroModel();
@@ -59,14 +60,15 @@ public class RegistroController extends Controller {
     }
 
     @FXML
-    private void handleRegistro() throws Exception {
+    private void handleCrearAdmin() {
 
         registroForm.persist();
 
         try {
 
             // Validar el formulario antes de procesar
-            if (!registroForm.isValid()) throw new FormularioIncorrectoException("Por favor, corrige los errores del formulario.");
+            if (!registroForm.isValid())
+                throw new FormularioIncorrectoException("Por favor, corrige los errores del formulario.");
 
             // Lógica de autenticación real
             String nombre = model.nombreProperty().get();
@@ -78,24 +80,19 @@ public class RegistroController extends Controller {
             String repetirContrasenia = model.repetirContraseniaProperty().get();
 
             // Verifica si existe
-            if (contrasenia.compareTo(repetirContrasenia) != 0) throw new FormularioIncorrectoException("Las contraseñas ingresadas no coinciden.");
+            if (contrasenia.compareTo(repetirContrasenia) != 0)
+                throw new FormularioIncorrectoException("Las contraseñas ingresadas no coinciden.");
             if (existeusuario(email)) throw new UsuarioYaExisteException("Ya existe un usuario con ese mail");
 
             // si no existe lo guerda
-            Usuario usuario = new Usuario(nombre, apellido, dni, email, telefono, contrasenia);
-            registrarPersona(usuario);
+            Administrador administrador = new Administrador(nombre, apellido, dni, email, telefono, contrasenia);
+            registrarPersona(administrador);
             mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Usuario creado con exito");
 
-            //Redirige al login
-            App.changeScene("logIn.fxml");
         } catch (UsuarioYaExisteException e) {
             mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", e.getMessage());
         } catch (FormularioIncorrectoException e) {
             mostrarAlerta(Alert.AlertType.WARNING, "Error de validación", e.getMessage());
         }
-    }
-
-    public void handleVolverALogin() {
-        App.changeScene("logIn.fxml");
     }
 }

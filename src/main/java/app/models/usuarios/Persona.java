@@ -1,6 +1,9 @@
 package app.models.usuarios;
 
 import app.App;
+import app.jsonUtils.JSONPersonas;
+import app.models.extras.PasswordAuth;
+
 import java.util.UUID;
 
 public abstract class Persona {
@@ -11,6 +14,7 @@ public abstract class Persona {
     private String email;
     private int telefono;
     private String contrasenia;
+    private boolean bloqueado = false;
 
     public Persona() {
     }
@@ -22,7 +26,18 @@ public abstract class Persona {
         this.dni = dni;
         this.email = email;
         this.telefono = telefono;
+        this.contrasenia = PasswordAuth.hash(contrasenia);
+    }
+
+    public Persona(UUID id, String nombre, String apellido, int dni, String email, int telefono, String contrasenia, boolean bloqueado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.email = email;
+        this.telefono = telefono;
         this.contrasenia = contrasenia;
+        this.bloqueado = bloqueado;
     }
 
     public UUID getId() {
@@ -39,6 +54,7 @@ public abstract class Persona {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+        JSONPersonas.grabarUnaPersona(this);
     }
 
     public String getApellido() {
@@ -47,6 +63,7 @@ public abstract class Persona {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+        JSONPersonas.grabarUnaPersona(this);
     }
 
     public int getDni() {
@@ -55,6 +72,7 @@ public abstract class Persona {
 
     public void setDni(int dni) {
         this.dni = dni;
+        JSONPersonas.grabarUnaPersona(this);
     }
 
     public String getEmail() {
@@ -63,6 +81,7 @@ public abstract class Persona {
 
     public void setEmail(String email) {
         this.email = email;
+        JSONPersonas.grabarUnaPersona(this);
     }
 
     public int getTelefono() {
@@ -71,16 +90,28 @@ public abstract class Persona {
 
     public void setTelefono(int telefono) {
         this.telefono = telefono;
+        JSONPersonas.grabarUnaPersona(this);
     }
 
     public String getContrasenia() {
-        if(App.getPersona().equals(this)) return contrasenia;
-        return " No tiene acceso ";
+         return this.contrasenia;
     }
 
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
+
+    public boolean isBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(boolean bloqueado) {
+        if (App.persona instanceof Administrador) {
+            this.bloqueado = bloqueado;
+            JSONPersonas.grabarUnaPersona(this);
+        }
+    }
+
 
     @Override
     public boolean equals(Object o) {

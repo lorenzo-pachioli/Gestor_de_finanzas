@@ -1,10 +1,12 @@
 package app;
 
+import app.models.colecciones.ListaPersonas;
+import app.models.usuarios.Administrador;
 import app.models.usuarios.Persona;
-import app.models.usuarios.Usuario;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -13,7 +15,8 @@ import java.net.URL;
 public class App extends Application {
 
     private static Stage stage;
-    private static Persona persona;
+    public static Persona persona;
+    public static ListaPersonas listaPersonas = new ListaPersonas();
 
     public static void main(String[] args) {
         launch(); // Arranca la app y abre la ventana
@@ -33,7 +36,10 @@ public class App extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml));
             Scene scene = null;
-            scene = new Scene(fxmlLoader.load(), 620, 640);
+            ScrollPane sp = new ScrollPane(fxmlLoader.load());
+            sp.setFitToWidth(true);
+            sp.setFitToHeight(true);
+            scene = new Scene(sp, 620, 640);
             URL cssUrl = App.class.getResource("styles.css");
             assert cssUrl != null;
             scene.getStylesheets().add(cssUrl.toExternalForm());
@@ -43,11 +49,11 @@ public class App extends Application {
         }
     }
 
-    public static Persona getPersona() {
-        return persona;
-    }
-
     public static void setPersona(Persona persona) {
         App.persona = persona;
+    }
+
+    public static void setListaPersonas(ListaPersonas listaPersonas) {
+        if(persona instanceof Administrador) App.listaPersonas = listaPersonas;
     }
 }
