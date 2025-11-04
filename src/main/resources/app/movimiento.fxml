@@ -5,8 +5,9 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="app.controllers.MovimientoController">
     <center>
-        <VBox alignment="CENTER" spacing="15">
-            <Label text="Movimientos"/>
+        <VBox spacing="15">
+            <VBox fx:id="seccionTitulo" alignment="CENTER"/>
+            <VBox fx:id="formContainer"/>
         </VBox>
     </center>
 </BorderPane>
