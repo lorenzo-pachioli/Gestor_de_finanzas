@@ -22,7 +22,7 @@ public abstract class Transaccion {
 
     public Transaccion(double monto, LocalDate fecha, int horas, int minutos, String descripcion, MetodoDePago metodoDePago) {
         this.id = UUID.randomUUID();
-        this.personaID = App.getPersona().getId();
+        this.personaID = App.persona.getId();
         this.monto = monto;
         this.fecha = fecha.atTime(horas, minutos);
         this.descripcion = descripcion;
