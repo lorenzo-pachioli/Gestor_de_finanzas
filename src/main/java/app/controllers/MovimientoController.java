@@ -78,6 +78,7 @@ public class MovimientoController {
         formContainer.getChildren().add(formRenderer);
     }
 
+    @FXML
     private void handleGuardar(){
         transaccionForm.persist();
 

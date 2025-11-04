@@ -8,6 +8,9 @@
         <VBox spacing="15">
             <VBox fx:id="seccionTitulo" alignment="CENTER"/>
             <VBox fx:id="formContainer"/>
+            <HBox prefWidth="600.0" alignment="CENTER" spacing="20.0">
+                <Button text="Crear" onAction="#handleGuardar"/>
+            </HBox>
         </VBox>
     </center>
 </BorderPane>

@@ -6,7 +6,7 @@ import javafx.beans.property.StringProperty;
 
 public class LoginModel {
 
-    private final StringProperty emailProperty = new SimpleStringProperty("admin@gmail.com");
+    private final StringProperty emailProperty = new SimpleStringProperty("user@gmail.com");
     private final StringProperty passwordProperty = new SimpleStringProperty("pass123");
 
     public StringProperty emailProperty() {
