@@ -59,7 +59,7 @@ public class RegistroController extends Controller {
     }
 
     @FXML
-    private void handleRegistro() throws Exception {
+    private void handleRegistro(){
 
         registroForm.persist();
 

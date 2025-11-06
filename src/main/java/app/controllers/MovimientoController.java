@@ -1,9 +1,10 @@
 package app.controllers;
 
+import app.enums.FuenteIngreso;
 import app.enums.MetodoDePago;
-import app.models.transacciones.Gasto;
-import app.models.transacciones.Ingreso;
-import app.models.transacciones.TransaccionModel;
+import app.enums.MotivoGasto;
+import app.enums.TipoTransaccion;
+import app.models.transacciones.*;
 import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
@@ -13,13 +14,19 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 
 public class MovimientoController {
+
+    public Button Gasto;
+    public Button Ingreso;
 
     @FXML
     private VBox formContainer;
@@ -32,50 +39,31 @@ public class MovimientoController {
 
     @FXML
     public void initialize(){
-        insertarTitulo();
 
-        //1. Crear el modelo de datos
-        this.model = new TransaccionModel();
-
-        //Tipo de transferencia
-        ObservableList<String> opcionesTipo = FXCollections.observableArrayList("Ingreso", "Gasto");
-        ListProperty<String> tiposProperty = new SimpleListProperty<>(opcionesTipo);
-
-        //Metodo de pago
-        ObservableList<MetodoDePago> opcionesMetodo = FXCollections.observableArrayList(MetodoDePago.values());
-        ListProperty<MetodoDePago> metodosProperty = new SimpleListProperty<>(opcionesMetodo);
 
         //2. Construir el formulario con FormsFX
-        this.transaccionForm = Form.of(
-                //Guardar.
-                Group.of(
-                        Field.ofSingleSelectionType(tiposProperty, model.tipoProperty())
-                                .label("Tipo de Transacción (INGRESO / GASTO)"),
-                        Field.ofDoubleType(model.montoProperty())
-                                .label("Monto"),
-                        Field.ofStringType(model.descripcionProperty())
-                                .label("Descripción"),
-                        Field.ofDate(model.fechaProperty())
-                                .label("Fecha"),
-                        Field.ofIntegerType(model.horasProperty())
-                                .label("Horas")
-                                .validate(
-                                        IntegerRangeValidator.between(0,23,"La hora debe estar entre 0 y 23")
-                                ),
-                        Field.ofIntegerType(model.minutosProperty())
-                                .label("Minutos")
-                                .validate(
-                                        IntegerRangeValidator.between(0,59,"Los minutos deben estar entre 0 y 59")
-                                ),
-                        Field.ofStringType(model.categoriaOFuenteProperty())
-                                .label("Motivo / Fuente"), // Actualizar dependiendo de el valor de tipoProperty
-                        Field.ofSingleSelectionType(metodosProperty, model.metodoDePagoProperty())
-                                .label("Metodo de Pago")
-                )
-        ).title("Ingresar Transaccion");
+        this.transaccionForm = seleccionarForm(TipoTransaccion.INGRESO);
 
         FormRenderer formRenderer = new FormRenderer(transaccionForm);
         formContainer.getChildren().add(formRenderer);
+    }
+
+    @FXML
+    private void handleFormIngresoOGasto(ActionEvent event){
+        Node source = (Node) event.getSource();
+        formContainer.getChildren().clear();
+        seccionTitulo.getChildren().clear();
+
+        if(source.getId().equalsIgnoreCase("Ingreso")){
+            this.transaccionForm = seleccionarForm(TipoTransaccion.INGRESO);
+            FormRenderer formRenderer = new FormRenderer(transaccionForm);
+            formContainer.getChildren().add(formRenderer);
+        } else {
+            this.transaccionForm = seleccionarForm(TipoTransaccion.GASTO);
+            FormRenderer formRenderer = new FormRenderer(transaccionForm);
+            formContainer.getChildren().add(formRenderer);
+        }
+
     }
 
     @FXML
@@ -83,26 +71,125 @@ public class MovimientoController {
         transaccionForm.persist();
 
         if(transaccionForm.isValid()){
-            String tipo = model.tipoProperty().get();
+            TipoTransaccion tipo = model.tipoProperty().get();
             double monto = model.montoProperty().get();
             String descripcion = model.descripcionProperty().get();
             LocalDate fecha = model.fechaProperty().get();
             int horas = model.horasProperty().get();
             int minutos = model.minutosProperty().get();
-            String categoriaOFuente = model.categoriaOFuenteProperty().get();
             MetodoDePago metodoDePago = model.metodoDePagoProperty().get();
 
-            if(tipo.equals("Ingreso")){
-                Ingreso ingreso = new Ingreso(monto, fecha, horas, minutos, descripcion, metodoDePago, categoriaOFuente);
+            if(tipo == TipoTransaccion.INGRESO){
+                IngresoModel ingresoModel = (IngresoModel) model;
+                FuenteIngreso fuente = ingresoModel.fuenteProperty().get();
+                Ingreso ingreso = new Ingreso(monto, fecha, horas, minutos, descripcion, metodoDePago, fuente.toString());
+                System.out.println(ingreso);
             }else{
-                Gasto gasto = new Gasto(monto, fecha, horas, minutos, descripcion, metodoDePago, categoriaOFuente);
+                GastoModel gastoModel = (GastoModel) model;
+                MotivoGasto motivo = gastoModel.motivoProperty().get();
+                Gasto gasto = new Gasto(monto, fecha, horas, minutos, descripcion, metodoDePago, motivo.toString());
+                System.out.println(gasto);
             }
         }
     }
 
-    private void insertarTitulo(){
-        Label titulo = new Label("Ingreso de Transacciones");
+    private void insertarTitulo(String textoTitulo){
+        Label titulo = new Label(textoTitulo);
         titulo.getStyleClass().add("titulo-h1");
         seccionTitulo.getChildren().setAll(titulo);
+    }
+
+    private Form seleccionarForm(TipoTransaccion tipo){
+        if(tipo == TipoTransaccion.GASTO) {
+            insertarTitulo("Agregar Gasto");
+            return iniciarFormGasto();
+        }else {
+            insertarTitulo("Agregar Ingreso");
+            return iniciarFormIngreso();
+        }
+    }
+
+    private Form iniciarFormIngreso(){
+        IngresoModel modelIngreso = new IngresoModel();
+
+        //Metodo de pago
+        ObservableList<MetodoDePago> opcionesMetodo = FXCollections.observableArrayList(MetodoDePago.values());
+        ListProperty<MetodoDePago> metodosProperty = new SimpleListProperty<>(opcionesMetodo);
+
+        //Fuente de ingreso
+        ObservableList<FuenteIngreso> opcionesFuente = FXCollections.observableArrayList(FuenteIngreso.values());
+        ListProperty<FuenteIngreso> fuentesProperty = new SimpleListProperty<>(opcionesFuente);
+
+        Form ingresoForm =  Form.of(
+                //Guardar.
+                Group.of(
+
+                        Field.ofDoubleType(modelIngreso.montoProperty())
+                                .label("Monto"),
+                        Field.ofStringType(modelIngreso.descripcionProperty())
+                                .label("Descripción"),
+                        Field.ofDate(modelIngreso.fechaProperty())
+                                .label("Fecha"),
+                        Field.ofIntegerType(modelIngreso.horasProperty())
+                                .label("Horas")
+                                .validate(
+                                        IntegerRangeValidator.between(0,23,"La hora debe estar entre 0 y 23")
+                                ),
+                        Field.ofIntegerType(modelIngreso.minutosProperty())
+                                .label("Minutos")
+                                .validate(
+                                        IntegerRangeValidator.between(0,59,"Los minutos deben estar entre 0 y 59")
+                                ),
+                        Field.ofSingleSelectionType(fuentesProperty, modelIngreso.fuenteProperty())
+                                .label("Fuente"), // Actualizar dependiendo de el valor de tipoProperty
+                        Field.ofSingleSelectionType(metodosProperty, modelIngreso.metodoDePagoProperty())
+                                .label("Metodo de Pago")
+                )
+        ).title("Agregar Ingreso");
+
+        this.model = modelIngreso;
+        return ingresoForm;
+    }
+
+    private Form iniciarFormGasto(){
+        GastoModel modelIngreso = new GastoModel();
+
+        //Metodo de pago
+        ObservableList<MetodoDePago> opcionesMetodo = FXCollections.observableArrayList(MetodoDePago.values());
+        ListProperty<MetodoDePago> metodosProperty = new SimpleListProperty<>(opcionesMetodo);
+
+        //Motivo de gasto
+        ObservableList<MotivoGasto> opcionesMotivo = FXCollections.observableArrayList(MotivoGasto.values());
+        ListProperty<MotivoGasto> motivoProperty = new SimpleListProperty<>(opcionesMotivo);
+        Form gastoForm = Form.of(
+                //Guardar.
+                Group.of(
+
+                        Field.ofDoubleType(modelIngreso.montoProperty())
+                                .label("Monto"),
+                        Field.ofStringType(modelIngreso.descripcionProperty())
+                                .label("Descripción"),
+                        Field.ofDate(modelIngreso.fechaProperty())
+                                .label("Fecha"),
+                        Field.ofIntegerType(modelIngreso.horasProperty())
+                                .label("Horas")
+                                .validate(
+                                        IntegerRangeValidator.between(0,23,"La hora debe estar entre 0 y 23")
+                                ),
+                        Field.ofIntegerType(modelIngreso.minutosProperty())
+                                .label("Minutos")
+                                .validate(
+                                        IntegerRangeValidator.between(0,59,"Los minutos deben estar entre 0 y 59")
+                                ),
+                        Field.ofSingleSelectionType(motivoProperty, modelIngreso.motivoProperty())
+                                .label("Motivo"), // Actualizar dependiendo de el valor de tipoProperty
+                        Field.ofSingleSelectionType(metodosProperty, modelIngreso.metodoDePagoProperty())
+                                .label("Metodo de Pago")
+                )
+        ).title("Agregar Gasto");
+
+
+        this.model = modelIngreso;
+        return gastoForm;
     }
 }
