@@ -23,6 +23,8 @@ import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 
+import static app.jsonUtils.JSONTransacciones.registrarTransaccion;
+
 public class MovimientoController {
 
     public Button Gasto;
@@ -83,12 +85,12 @@ public class MovimientoController {
                 IngresoModel ingresoModel = (IngresoModel) model;
                 FuenteIngreso fuente = ingresoModel.fuenteProperty().get();
                 Ingreso ingreso = new Ingreso(monto, fecha, horas, minutos, descripcion, metodoDePago, fuente.toString());
-                System.out.println(ingreso);
+                registrarTransaccion(ingreso);
             }else{
                 GastoModel gastoModel = (GastoModel) model;
                 MotivoGasto motivo = gastoModel.motivoProperty().get();
                 Gasto gasto = new Gasto(monto, fecha, horas, minutos, descripcion, metodoDePago, motivo.toString());
-                System.out.println(gasto);
+                registrarTransaccion(gasto);
             }
         }
     }

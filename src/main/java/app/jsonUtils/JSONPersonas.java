@@ -82,8 +82,7 @@ public class JSONPersonas extends JSONUtiles {
     }
 
     public static void registrarPersona(Persona persona){
-        JSONArray array = new JSONArray();
-        array = leerPersonas();
+        JSONArray array = leerPersonas();
         JSONObject u = new JSONObject();
         u.put("id", persona.getId());
         u.put("nombre", persona.getNombre());

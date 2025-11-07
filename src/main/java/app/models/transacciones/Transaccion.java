@@ -15,9 +15,18 @@ public abstract class Transaccion {
     private String descripcion;
     private MetodoDePago metodoDePago;
 
-    public Transaccion() {
+/*    public Transaccion() {
         this.id = UUID.randomUUID();
         this.fecha = LocalDateTime.now();
+    }*/
+
+    public Transaccion(UUID id, UUID personaID, double monto, LocalDateTime fecha, String descripcion, MetodoDePago metodoDePago) {
+        this.id = id;
+        this.personaID = personaID;
+        this.monto = monto;
+        this.fecha = fecha;
+        this.descripcion = descripcion;
+        this.metodoDePago = metodoDePago;
     }
 
     public Transaccion(double monto, LocalDate fecha, int horas, int minutos, String descripcion, MetodoDePago metodoDePago) {
