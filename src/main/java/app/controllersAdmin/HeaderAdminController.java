@@ -14,7 +14,7 @@ public class HeaderAdminController {
     @FXML
     private void handleHomeAdminSelected(ActionEvent event) {
         if (parentController != null) {
-            parentController.loadPage("admin/homeAdmin2.fxml");
+            parentController.loadPage("admin/homeAdmin.fxml");
         }
     }
 
