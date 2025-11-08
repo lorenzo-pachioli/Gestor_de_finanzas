@@ -22,6 +22,7 @@
             <Button fx:id="btnFiltrarTodo" text="Todo"/>
             <Button fx:id="btnFiltrarIngresos" text="Ingresos"/>
             <Button fx:id="btnFiltrarGastos" text="Gastos"/>
+            <Button text="Descargar resumen" onAction="#handleExportarResumen"/>
         </HBox>
     </top>
 

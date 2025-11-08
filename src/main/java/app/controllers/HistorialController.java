@@ -3,6 +3,7 @@ package app.controllers;
 import app.App;
 import app.jsonUtils.JSONTransacciones;
 import app.models.colecciones.ListaTransacciones;
+import app.models.extras.ReporteGenerator;
 import app.models.transacciones.Transaccion;
 import app.models.transacciones.Gasto;
 import app.models.transacciones.Ingreso;
@@ -19,7 +20,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-public class HistorialController {
+import static app.models.extras.ReporteGenerator.generarResumenTransacciones;
+import static app.models.extras.ReporteGenerator.guardarResumen;
+
+public class HistorialController extends Controller {
 
     @FXML private TableView<Transaccion> tablaTransacciones;
     @FXML private TableColumn<Transaccion, String> colFecha;
@@ -144,6 +148,17 @@ public class HistorialController {
         } else if (t instanceof Gasto g) {
             panelDetalles.getChildren().add(new Label("Tipo: Gasto"));
             panelDetalles.getChildren().add(new Label("Motivo: " + (g.getMotivoGasto() != null ? g.getMotivoGasto().name() : "")));
+        }
+    }
+
+    @FXML
+    private void handleExportarResumen() {
+        ArrayList<Transaccion> transacciones = App.listaTransacciones.getListaTransacciones();
+        String resumen = generarResumenTransacciones(transacciones, App.persona);
+        boolean exito = guardarResumen(resumen, "resumen-transacciones");
+
+        if (exito) {
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Reporte exportado correctamente");
         }
     }
 }
