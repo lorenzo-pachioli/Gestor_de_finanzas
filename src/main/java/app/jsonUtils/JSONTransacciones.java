@@ -9,6 +9,7 @@ import app.models.colecciones.ListaTransacciones;
 import app.models.transacciones.Gasto;
 import app.models.transacciones.Ingreso;
 import app.models.transacciones.Transaccion;
+import app.models.usuarios.Persona;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.time.LocalDateTime;
@@ -25,6 +26,17 @@ public class JSONTransacciones extends JSONUtiles{
     public static void grabarTransacciones(ListaTransacciones listaTransacciones){
         JSONArray array = escribirTransaccionArray(listaTransacciones);
         grabar(array, archivo);
+    }
+
+    public static void grabarUnaTransaccion(Transaccion transaccion){
+        JSONArray jsonLista = leerTransacciones();
+        for(int i=0 ; i<jsonLista.length() ; i++){
+            JSONObject o = jsonLista.getJSONObject(i);
+            if(o.getString("id").equals(String.valueOf(transaccion.getId()))){
+                jsonLista.put(i, transaccionAJson(transaccion));
+            }
+        }
+        grabar(jsonLista, archivo);
     }
 
     public static JSONArray leerTransacciones(){

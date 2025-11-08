@@ -43,13 +43,13 @@ public class ListaTransacciones {
         this.guardarListaTransacciones();
     }
 
-    public  void modificarTransaccion(Persona persona){
-        JSONPersonas.grabarUnaPersona(persona);
+    public  void modificarTransaccion(Transaccion transaccion){
+        JSONTransacciones.grabarUnaTransaccion(transaccion);
         guardarListaTransacciones();
     }
 
-    public void borrarTransaccion(Persona persona){
-        JSONPersonas.borrarUnaPersona(persona);
+    public void borrarTransaccion(Transaccion transaccion){
+        JSONTransacciones.borrarTransaccion(transaccion);
         guardarListaTransacciones();
     }
 
