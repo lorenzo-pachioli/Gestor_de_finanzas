@@ -23,10 +23,6 @@ public class JSONTransacciones extends JSONUtiles{
         grabar(array, archivo);
     }
 
-    public static void grabarTransacciones(ListaTransacciones listaTransacciones){
-        JSONArray array = escribirTransaccionArray(listaTransacciones);
-        grabar(array, archivo);
-    }
 
     public static void grabarUnaTransaccion(Transaccion transaccion){
         JSONArray jsonLista = leerTransacciones();
@@ -36,7 +32,7 @@ public class JSONTransacciones extends JSONUtiles{
                 jsonLista.put(i, transaccionAJson(transaccion));
             }
         }
-        grabar(jsonLista, archivo);
+        grabarTransacciones(jsonLista);
     }
 
     public static JSONArray leerTransacciones(){
@@ -64,6 +60,13 @@ public class JSONTransacciones extends JSONUtiles{
         return listaTransacciones;
     }
 
+    public static void agregarTransaccion(Transaccion transaccion){
+        JSONObject jsonTransaccion = transaccionAJson(transaccion);
+        JSONArray lista = leerTransacciones();
+        lista.put(jsonTransaccion);
+        grabarTransacciones(lista);
+    }
+
     public static void borrarTransaccion(Transaccion transaccion){
         JSONArray jsonLista = leerTransacciones();
         JSONArray jsonListaNueva = new JSONArray();
@@ -73,7 +76,7 @@ public class JSONTransacciones extends JSONUtiles{
                 jsonListaNueva.put(o);
             }
         }
-        grabar(jsonListaNueva, archivo);
+        grabarTransacciones(jsonListaNueva);
     }
 
     public static JSONArray escribirTransaccionArray(ListaTransacciones listaTransaccion){

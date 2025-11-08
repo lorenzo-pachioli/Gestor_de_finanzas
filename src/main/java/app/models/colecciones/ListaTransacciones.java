@@ -24,33 +24,24 @@ public class ListaTransacciones {
         }
     }
 
-    public void guardarListaTransacciones() {
-        JSONTransacciones.grabarTransacciones(this);
-        App.listaTransacciones.iniciarListaTransacciones();
-    }
-
     public ArrayList<Transaccion> getListaTransacciones() {
         return listaTransacciones.getElementos();
     }
 
-    public void setListaTransacciones(ListaGenerica<Transaccion> listaTransacciones) {
-        this.listaTransacciones = listaTransacciones;
-        this.guardarListaTransacciones();
-    }
 
     public void agregarTransaccion(Transaccion transaccion) {
-        this.listaTransacciones.agregar(transaccion);
-        this.guardarListaTransacciones();
+        JSONTransacciones.agregarTransaccion(transaccion);
+        App.listaTransacciones.iniciarListaTransacciones();
     }
 
     public  void modificarTransaccion(Transaccion transaccion){
         JSONTransacciones.grabarUnaTransaccion(transaccion);
-        guardarListaTransacciones();
+        App.listaTransacciones.iniciarListaTransacciones();
     }
 
     public void borrarTransaccion(Transaccion transaccion){
         JSONTransacciones.borrarTransaccion(transaccion);
-        guardarListaTransacciones();
+        App.listaTransacciones.iniciarListaTransacciones();
     }
 
     @Override
