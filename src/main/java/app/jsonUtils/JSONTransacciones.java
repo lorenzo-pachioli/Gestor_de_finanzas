@@ -43,7 +43,7 @@ public class JSONTransacciones extends JSONUtiles{
         JSONArray array = leerTransacciones();
         JSONObject t = new JSONObject();
         t.put("id", transaccion.getId());
-        t.put("presonaID", transaccion.getPersonaID());
+        t.put("personaID", transaccion.getPersonaID());
         t.put("fecha", transaccion.getFecha());
         t.put("monto", transaccion.getMonto());
         t.put("metodoDePago", transaccion.getMetodoDePago());
@@ -87,16 +87,36 @@ public class JSONTransacciones extends JSONUtiles{
         String descripcion = transaccion.getString("descripcion");
         MetodoDePago metodoDePago = MetodoDePago.valueOf(transaccion.getString("metodoDePago"));
 
-        if(transaccion.getString("fuenteIngreso") != null){
-            return new Ingreso(UUID.fromString(id), UUID.fromString(personaID), monto, fecha, descripcion, metodoDePago, FuenteIngreso.valueOf(transaccion.getString("fuenteIngreso")));
+        String fuente = transaccion.optString("fuente", null);
+        String motivo = transaccion.optString("motivo", null);
+
+        if (fuente != null && !fuente.isEmpty()) {
+            return new Ingreso(
+                    UUID.fromString(id),
+                    UUID.fromString(personaID),
+                    monto,
+                    fecha,
+                    descripcion,
+                    metodoDePago,
+                    FuenteIngreso.valueOf(fuente)
+            );
         }
-        return new Gasto(UUID.fromString(id), UUID.fromString(personaID), monto, fecha, descripcion, metodoDePago, MotivoGasto.valueOf(transaccion.getString("motivoGasto")));
+
+        return new Gasto(
+                UUID.fromString(id),
+                UUID.fromString(personaID),
+                monto,
+                fecha,
+                descripcion,
+                metodoDePago,
+                MotivoGasto.valueOf(motivo)
+        );
     }
 
     public static JSONObject transaccionAJson(Transaccion transaccion){
         JSONObject jsonTransaccion = new JSONObject();
         jsonTransaccion.put("id", transaccion.getId());
-        jsonTransaccion.put("presonaID", transaccion.getPersonaID());
+        jsonTransaccion.put("personaID", transaccion.getPersonaID());
         jsonTransaccion.put("fecha", transaccion.getFecha());
         jsonTransaccion.put("monto", transaccion.getMonto());
         jsonTransaccion.put("metodoDePago", transaccion.getMetodoDePago());

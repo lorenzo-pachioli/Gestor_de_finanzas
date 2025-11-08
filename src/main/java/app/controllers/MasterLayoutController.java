@@ -30,7 +30,7 @@ public class MasterLayoutController {
     // Metodo para cambiar la escena dentro de masterLayout
     public void loadPage(String fxmlPath) {
         try {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/" + fxmlPath));
             Node page = loader.load();
             centerPane.getChildren().setAll(page);
         } catch (IOException e) {
