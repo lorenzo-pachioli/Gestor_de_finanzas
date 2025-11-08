@@ -1,5 +1,6 @@
 package app.jsonUtils;
 
+import app.App;
 import app.enums.FuenteIngreso;
 import app.enums.MetodoDePago;
 import app.enums.MotivoGasto;
@@ -39,23 +40,16 @@ public class JSONTransacciones extends JSONUtiles{
         return listaTransacciones;
     }
 
-    public static boolean registrarTransaccion(Transaccion transaccion){
-        JSONArray array = leerTransacciones();
-        JSONObject t = new JSONObject();
-        t.put("id", transaccion.getId());
-        t.put("personaID", transaccion.getPersonaID());
-        t.put("fecha", transaccion.getFecha());
-        t.put("monto", transaccion.getMonto());
-        t.put("metodoDePago", transaccion.getMetodoDePago());
-        t.put("descripcion", transaccion.getDescripcion());
-        if(transaccion instanceof Ingreso i){
-            t.put("fuente", i.getFuenteIngreso());
-        }else if(transaccion instanceof Gasto g){
-            t.put("motivo", g.getMotivoGasto());
+    public static ListaGenerica<Transaccion> leerTransaccionesArrayPorUsuario(){
+        ListaGenerica<Transaccion> listaTransacciones = new ListaGenerica<>();
+        JSONArray JSONTransacciones = leerTransacciones();
+        for(int i=0 ; i<JSONTransacciones.length() ; i++){
+            JSONObject transaccion = JSONTransacciones.getJSONObject(i);
+            if(UUID.fromString(transaccion.getString("personaID")).equals(App.persona.getId())){
+                listaTransacciones.agregar(jsonATransaccion(JSONTransacciones.getJSONObject(i)));
+            }
         }
-        array.put(t);
-        grabarTransacciones(array);
-        return true;
+        return listaTransacciones;
     }
 
     public static void borrarTransaccion(Transaccion transaccion){

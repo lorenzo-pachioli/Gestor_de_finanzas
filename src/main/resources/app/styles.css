@@ -51,14 +51,6 @@
     -fx-alignment: CENTER-LEFT;
 }
 
-.table-row-cell:selected {
-    -fx-background-color: #e3f2fd;
-}
-
-.table-row-cell:hover {
-    -fx-background-color: #f5f5f5;
-}
-
 /* Estilos para botones en la tabla */
 .btn-danger {
     -fx-background-color: #ff4d4d;

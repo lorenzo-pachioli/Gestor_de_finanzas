@@ -1,6 +1,7 @@
 package app;
 
 import app.models.colecciones.ListaPersonas;
+import app.models.colecciones.ListaTransacciones;
 import app.models.usuarios.Administrador;
 import app.models.usuarios.Persona;
 import javafx.application.Application;
@@ -17,6 +18,7 @@ public class App extends Application {
     private static Stage stage;
     public static Persona persona;
     public static ListaPersonas listaPersonas = new ListaPersonas();
+    public static ListaTransacciones listaTransacciones = new ListaTransacciones();
 
     public static void main(String[] args) {
         launch(); // Arranca la app y abre la ventana

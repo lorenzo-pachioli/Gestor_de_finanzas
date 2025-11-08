@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.App;
 import app.enums.FuenteIngreso;
 import app.enums.MetodoDePago;
 import app.enums.MotivoGasto;
@@ -20,10 +21,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-
 import java.time.LocalDate;
 
-import static app.jsonUtils.JSONTransacciones.registrarTransaccion;
 
 public class MovimientoController {
 
@@ -85,12 +84,12 @@ public class MovimientoController {
                 IngresoModel ingresoModel = (IngresoModel) model;
                 FuenteIngreso fuente = ingresoModel.fuenteProperty().get();
                 Ingreso ingreso = new Ingreso(monto, fecha, horas, minutos, descripcion, metodoDePago, fuente.toString());
-                registrarTransaccion(ingreso);
+                App.listaTransacciones.agregarTransaccion(ingreso);
             }else{
                 GastoModel gastoModel = (GastoModel) model;
                 MotivoGasto motivo = gastoModel.motivoProperty().get();
                 Gasto gasto = new Gasto(monto, fecha, horas, minutos, descripcion, metodoDePago, motivo.toString());
-                registrarTransaccion(gasto);
+                App.listaTransacciones.agregarTransaccion(gasto);
             }
         }
     }

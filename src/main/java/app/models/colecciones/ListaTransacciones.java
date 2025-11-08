@@ -17,16 +17,20 @@ public class ListaTransacciones {
     }
 
     public void iniciarListaTransacciones() {
-        this.listaTransacciones = JSONTransacciones.leerTransaccionesArray();
+        if(App.persona instanceof Administrador){
+            this.listaTransacciones = JSONTransacciones.leerTransaccionesArray();
+        } else {
+            this.listaTransacciones = JSONTransacciones.leerTransaccionesArrayPorUsuario();
+        }
     }
 
     public void guardarListaTransacciones() {
         JSONTransacciones.grabarTransacciones(this);
+        App.listaTransacciones.iniciarListaTransacciones();
     }
 
     public ArrayList<Transaccion> getListaTransacciones() {
-        if (App.persona instanceof Administrador) return listaTransacciones.getElementos();
-        return new ArrayList<>();
+        return listaTransacciones.getElementos();
     }
 
     public void setListaTransacciones(ListaGenerica<Transaccion> listaTransacciones) {

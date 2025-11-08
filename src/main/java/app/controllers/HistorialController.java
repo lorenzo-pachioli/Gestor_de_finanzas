@@ -1,6 +1,8 @@
 package app.controllers;
 
+import app.App;
 import app.jsonUtils.JSONTransacciones;
+import app.models.colecciones.ListaTransacciones;
 import app.models.transacciones.Transaccion;
 import app.models.transacciones.Gasto;
 import app.models.transacciones.Ingreso;
@@ -12,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -92,12 +95,12 @@ public class HistorialController {
     }
 
     private void cargarDesdeJson() {
-        var listaGenerica = JSONTransacciones.leerTransaccionesArray();
+        List<Transaccion> listaGenerica= App.listaTransacciones.getListaTransacciones();
 
-        if (listaGenerica == null || listaGenerica.getElementos().isEmpty()) {
+        if (listaGenerica == null || listaGenerica.isEmpty()) {
             allTransacciones = List.of();
         } else {
-            allTransacciones = listaGenerica.getElementos();
+            allTransacciones = listaGenerica;
             allTransacciones.sort(
                     Comparator.comparing(
                             Transaccion::getFecha,

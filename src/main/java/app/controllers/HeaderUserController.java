@@ -27,8 +27,12 @@ public class HeaderUserController {
 
     @FXML
     private void handleHistorialSelected(ActionEvent event) {
-        if (parentController != null) {
-            parentController.loadPage("historial.fxml");
+        try {
+            if (parentController != null) {
+                parentController.loadPage("historial.fxml");
+            }
+        } catch (RuntimeException e) {
+            System.out.println(e);
         }
     }
     @FXML
