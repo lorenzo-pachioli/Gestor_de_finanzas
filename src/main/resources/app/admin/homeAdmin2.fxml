@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="app.controllersAdmin.HomeAdminController2">
+    <top>
+        <VBox alignment="CENTER" spacing="15" style="-fx-padding: 20;">
+            <Label text="Lista de Usuarios" styleClass="titulo-h1"/>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="tablaUsuarios" style="-fx-padding: 10;">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
+                <TableColumn fx:id="colAcceso" text="Acceso" prefWidth="100"/>
+                <TableColumn fx:id="colNombre" text="Nombre" prefWidth="100"/>
+                <TableColumn fx:id="colApellido" text="Apellido" prefWidth="100"/>
+                <TableColumn fx:id="colDni" text="DNI" prefWidth="100"/>
+                <TableColumn fx:id="colTelefono" text="Teléfono" prefWidth="100"/>
+                <TableColumn fx:id="colEmail" text="Email" prefWidth="180"/>
+                <TableColumn fx:id="colBloqueado" text="Bloqueado" prefWidth="80"/>
+                <TableColumn fx:id="colAcciones" text="Acciones" prefWidth="250"/>
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>

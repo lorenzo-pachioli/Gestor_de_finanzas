@@ -34,7 +34,7 @@ public class MasterLayoutAdminController {
 
         // Establece la comunicación con el controlador del header
         if (headerAdminComponentController != null) headerAdminComponentController.setParentController(this);
-        loadPage("admin/homeAdmin.fxml");
+        loadPage("admin/homeAdmin2.fxml");
     }
 
     // Metodo para cambiar la escena dentro de masterLayoutAdmin

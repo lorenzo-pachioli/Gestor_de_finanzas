@@ -39,7 +39,7 @@ public class App extends Application {
             ScrollPane sp = new ScrollPane(fxmlLoader.load());
             sp.setFitToWidth(true);
             sp.setFitToHeight(true);
-            scene = new Scene(sp, 620, 640);
+            scene = new Scene(sp, 1200, 700);
             URL cssUrl = App.class.getResource("styles.css");
             assert cssUrl != null;
             scene.getStylesheets().add(cssUrl.toExternalForm());
