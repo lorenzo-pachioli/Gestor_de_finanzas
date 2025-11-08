@@ -1,4 +1,8 @@
 
+.title-pane {
+    -fx-background-color: #D3D3D3; /* Hex code for LightGray */
+}
+
 .label.titulo-h1 {
     -fx-pref-width: 620px;
     -fx-font-size: 24pt ;
