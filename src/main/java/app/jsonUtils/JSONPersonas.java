@@ -81,22 +81,6 @@ public class JSONPersonas extends JSONUtiles {
         }
     }
 
-    public static void registrarPersona(Persona persona){
-        JSONArray array = leerPersonas();
-        JSONObject u = new JSONObject();
-        u.put("id", persona.getId());
-        u.put("nombre", persona.getNombre());
-        u.put("apellido", persona.getApellido());
-        u.put("dni", persona.getDni());
-        u.put("telefono", persona.getTelefono());
-        u.put("email", persona.getEmail());
-        u.put("contrasenia", persona.getContrasenia());
-        u.put("acceso", persona instanceof Usuario ? NivelAcceso.USUARIO:NivelAcceso.ADMINISTRADOR);
-        u.put("bloqueado", persona.isBloqueado());
-        array.put(u);
-        grabarPersonas(array);
-    }
-
     public static boolean existeusuario(String email){
 
         try {

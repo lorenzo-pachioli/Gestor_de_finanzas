@@ -83,7 +83,7 @@ public class RegistroController extends Controller {
 
             // si no existe lo guerda
             Usuario usuario = new Usuario(nombre, apellido, dni, email, telefono, contrasenia);
-            registrarPersona(usuario);
+            App.listaPersonas.agregarPersona(usuario);
             mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Usuario creado con exito");
 
             //Redirige al login
