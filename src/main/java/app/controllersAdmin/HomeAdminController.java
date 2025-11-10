@@ -81,13 +81,11 @@ public class HomeAdminController extends Controller {
         colAcciones.setCellFactory(param -> new TableCell<>() {
             private final Button btnBorrar = new Button("Borrar");
             private final Button btnBloquear = new Button("Bloquear");
-            private final Button btnTransacciones = new Button("Ver movimientos");
             private final HBox contenedor = new HBox(10);
 
             {
                 btnBorrar.getStyleClass().add("btn-danger");
                 btnBloquear.getStyleClass().add("btn-warning");
-                btnTransacciones.getStyleClass().add("btn-info");
 
                 contenedor.setAlignment(Pos.CENTER);
 
@@ -99,11 +97,6 @@ public class HomeAdminController extends Controller {
                 btnBloquear.setOnAction(event -> {
                     PersonaTableData data = getTableView().getItems().get(getIndex());
                     toggleBloqueo(data.getPersona());
-                });
-
-                btnTransacciones.setOnAction(event -> {
-                    PersonaTableData data = getTableView().getItems().get(getIndex());
-                    mostrarHistorial(data.getPersona());
                 });
             }
 
@@ -122,7 +115,7 @@ public class HomeAdminController extends Controller {
 
                     // Configurar botones según el tipo de usuario
                     if (persona instanceof Usuario) {
-                        contenedor.getChildren().setAll(btnBorrar, btnBloquear, btnTransacciones);
+                        contenedor.getChildren().setAll(btnBorrar, btnBloquear);
                     } else {
                         contenedor.getChildren().setAll(btnBorrar, btnBloquear);
                     }
@@ -162,21 +155,6 @@ public class HomeAdminController extends Controller {
         cargarDatosTabla();
     }
 
-    private void mostrarHistorial(Persona persona) {
-        try {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("historial.fxml"));
-            Scene scene = new Scene(loader.load(), 1200, 700);
-            URL cssUrl = App.class.getResource("styles.css");
-            if (cssUrl != null) {
-                scene.getStylesheets().add(cssUrl.toExternalForm());
-            }
-            verMovimientos.setTitle("Historial de " + persona.getNombre());
-            verMovimientos.setScene(scene);
-            verMovimientos.showAndWait();
-        } catch (IOException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se pudo abrir el historial: " + e.getMessage());
-        }
-    }
 
     // Clase interna para representar los datos de la tabla
     public static class PersonaTableData {
