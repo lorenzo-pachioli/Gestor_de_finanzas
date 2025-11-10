@@ -25,7 +25,7 @@ public class ListaPersonas {
 
     public ArrayList<Persona> getListaPersonas() {
         if (App.persona instanceof Administrador) return listaPersonas.getElementos();
-        return new ArrayList<>();
+        return listaPersonas.getElementos();
     }
 
     public void setListaPersonas(ListaGenerica<Persona> listaPersonas) {
