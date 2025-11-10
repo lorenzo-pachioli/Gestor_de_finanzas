@@ -1,7 +1,5 @@
 package app.models.usuarios;
 
-
-import app.App;
 import app.enums.NivelAcceso;
 
 import java.util.UUID;

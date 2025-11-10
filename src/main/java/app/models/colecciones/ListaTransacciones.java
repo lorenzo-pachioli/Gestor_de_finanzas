@@ -1,11 +1,9 @@
 package app.models.colecciones;
 
 import app.App;
-import app.jsonUtils.JSONPersonas;
 import app.jsonUtils.JSONTransacciones;
 import app.models.transacciones.Transaccion;
 import app.models.usuarios.Administrador;
-import app.models.usuarios.Persona;
 
 import java.util.ArrayList;
 
