@@ -22,17 +22,6 @@ public class ReporteGenerator {
         int countIngresos = 0;
         int countGastos = 0;
 
-        for (Transaccion t : transacciones) {
-            if (t.getClass().getSimpleName().equals("Ingreso")) {
-                totalIngresos += t.getMonto();
-                countIngresos++;
-            } else {
-                totalGastos += t.getMonto();
-                countGastos++;
-            }
-        }
-
-        double balance = totalIngresos - totalGastos;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
         StringBuilder resumen = new StringBuilder();
@@ -75,6 +64,7 @@ public class ReporteGenerator {
             }
             i++;
         }
+        double balance = totalIngresos - totalGastos;
         resumen.append("\n -----------------------------------------------------------\n");
         resumen.append(String.format("Total Ingresos:  $%.2f (%d transacciones)\n", totalIngresos, countIngresos));
         resumen.append(String.format("Total Gastos:    $%.2f (%d transacciones)\n", totalGastos, countGastos));
