@@ -12,7 +12,7 @@ public abstract class TransaccionModel {
     private final StringProperty descripcion = new SimpleStringProperty("");
     private final ObjectProperty<MetodoDePago> metodoDePago = new SimpleObjectProperty<>();
     private final ObjectProperty<TipoTransaccion> tipo = new SimpleObjectProperty<>();
-    private final ObjectProperty<LocalDate> fecha = new SimpleObjectProperty<>();
+    private final ObjectProperty<LocalDate> fecha = new SimpleObjectProperty<>(LocalDate.now());
     private final IntegerProperty horas = new SimpleIntegerProperty(LocalDateTime.now().getHour());
     private final IntegerProperty minutos = new SimpleIntegerProperty(LocalDateTime.now().getMinute());
 

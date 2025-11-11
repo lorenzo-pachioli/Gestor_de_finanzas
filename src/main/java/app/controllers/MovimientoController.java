@@ -9,6 +9,7 @@ import app.models.transacciones.*;
 import com.dlsc.formsfx.model.structure.Field;
 import com.dlsc.formsfx.model.structure.Form;
 import com.dlsc.formsfx.model.structure.Group;
+import com.dlsc.formsfx.model.validators.DoubleRangeValidator;
 import com.dlsc.formsfx.model.validators.IntegerRangeValidator;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import javafx.beans.property.ListProperty;
@@ -18,13 +19,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import java.time.LocalDate;
 
 
-public class MovimientoController {
+public class MovimientoController extends Controller{
 
     public Button Gasto;
     public Button Ingreso;
@@ -85,11 +87,13 @@ public class MovimientoController {
                 FuenteIngreso fuente = ingresoModel.fuenteProperty().get();
                 Ingreso ingreso = new Ingreso(monto, fecha, horas, minutos, descripcion, metodoDePago, fuente.toString());
                 App.listaTransacciones.agregarTransaccion(ingreso);
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Ingreso agregado con exito");
             }else{
                 GastoModel gastoModel = (GastoModel) model;
                 MotivoGasto motivo = gastoModel.motivoProperty().get();
                 Gasto gasto = new Gasto(monto, fecha, horas, minutos, descripcion, metodoDePago, motivo.toString());
                 App.listaTransacciones.agregarTransaccion(gasto);
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Gasto agregado con exito");
             }
         }
     }
@@ -126,7 +130,10 @@ public class MovimientoController {
                 Group.of(
 
                         Field.ofDoubleType(modelIngreso.montoProperty())
-                                .label("Monto"),
+                                .label("Monto")
+                                .validate(
+                                        DoubleRangeValidator.atLeast(0,"El monto no puede ser negativo.")
+                                ),
                         Field.ofStringType(modelIngreso.descripcionProperty())
                                 .label("Descripción"),
                         Field.ofDate(modelIngreso.fechaProperty())
@@ -134,12 +141,12 @@ public class MovimientoController {
                         Field.ofIntegerType(modelIngreso.horasProperty())
                                 .label("Horas")
                                 .validate(
-                                        IntegerRangeValidator.between(0,23,"La hora debe estar entre 0 y 23")
+                                        IntegerRangeValidator.between(0,23,"La hora debe estar entre 0 y 23.")
                                 ),
                         Field.ofIntegerType(modelIngreso.minutosProperty())
                                 .label("Minutos")
                                 .validate(
-                                        IntegerRangeValidator.between(0,59,"Los minutos deben estar entre 0 y 59")
+                                        IntegerRangeValidator.between(0,59,"Los minutos deben estar entre 0 y 59.")
                                 ),
                         Field.ofSingleSelectionType(fuentesProperty, modelIngreso.fuenteProperty())
                                 .label("Fuente"), // Actualizar dependiendo de el valor de tipoProperty
@@ -167,7 +174,10 @@ public class MovimientoController {
                 Group.of(
 
                         Field.ofDoubleType(modelIngreso.montoProperty())
-                                .label("Monto"),
+                                .label("Monto")
+                                .validate(
+                                        DoubleRangeValidator.atLeast(0,"El monto no puede ser negativo.")
+                                ),
                         Field.ofStringType(modelIngreso.descripcionProperty())
                                 .label("Descripción"),
                         Field.ofDate(modelIngreso.fechaProperty())
@@ -175,12 +185,12 @@ public class MovimientoController {
                         Field.ofIntegerType(modelIngreso.horasProperty())
                                 .label("Horas")
                                 .validate(
-                                        IntegerRangeValidator.between(0,23,"La hora debe estar entre 0 y 23")
+                                        IntegerRangeValidator.between(0,23,"La hora debe estar entre 0 y 23.")
                                 ),
                         Field.ofIntegerType(modelIngreso.minutosProperty())
                                 .label("Minutos")
                                 .validate(
-                                        IntegerRangeValidator.between(0,59,"Los minutos deben estar entre 0 y 59")
+                                        IntegerRangeValidator.between(0,59,"Los minutos deben estar entre 0 y 59.")
                                 ),
                         Field.ofSingleSelectionType(motivoProperty, modelIngreso.motivoProperty())
                                 .label("Motivo"), // Actualizar dependiendo de el valor de tipoProperty
@@ -188,7 +198,6 @@ public class MovimientoController {
                                 .label("Metodo de Pago")
                 )
         ).title("Agregar Gasto");
-
 
         this.model = modelIngreso;
         return gastoForm;
