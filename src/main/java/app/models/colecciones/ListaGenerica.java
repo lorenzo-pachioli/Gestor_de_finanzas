@@ -39,6 +39,10 @@ public class ListaGenerica <T> {
         elementos.remove(elemento);
     }
 
+    public ArrayList<T> toList() {
+        return new ArrayList<>(elementos);
+    }
+
     @Override
     public String toString() {
         return "{" +

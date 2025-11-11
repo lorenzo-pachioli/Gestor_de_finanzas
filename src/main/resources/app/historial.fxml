@@ -1,12 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="app.controllers.HistorialController">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="app.controllers.HistorialController">
+
+    <top>
+        <HBox spacing="10" style="-fx-padding: 20;">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <Button fx:id="btnFiltrarTodo" text="Todo"/>
+            <Button fx:id="btnFiltrarIngresos" text="Ingresos"/>
+            <Button fx:id="btnFiltrarGastos" text="Gastos"/>
+            <Button text="Descargar resumen" onAction="#handleExportarResumen"/>
+        </HBox>
+    </top>
+
     <center>
-        <VBox alignment="CENTER" spacing="15">
-            <Label text="Historial"/>
-        </VBox>
+        <TableView fx:id="tablaTransacciones"
+                   prefHeight="300.0"
+                   prefWidth="650.0">
+            <columns>
+                <TableColumn fx:id="colFecha" text="Fecha" prefWidth="120"/>
+                <TableColumn fx:id="colDescripcion" text="Descripción" prefWidth="350"/>
+                <TableColumn fx:id="colMonto" text="Monto" prefWidth="120"/>
+            </columns>
+        </TableView>
     </center>
+
+    <bottom>
+        <VBox fx:id="panelDetalles"
+              spacing="6">
+            <padding>
+                <Insets top="8" right="8" bottom="8" left="8"/>
+            </padding>
+            <Label text="Selecciona una transacción para ver los detalles completos"/>
+        </VBox>
+    </bottom>
+
 </BorderPane>

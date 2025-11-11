@@ -86,11 +86,11 @@ public class AdminNuevoController extends Controller {
 
             // si no existe lo guerda
             Administrador administrador = new Administrador(nombre, apellido, dni, email, telefono, contrasenia);
-            registrarPersona(administrador);
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "Usuario creado con exito");
+            App.listaPersonas.agregarPersona(administrador);
+            mostrarAlerta(Alert.AlertType.CONFIRMATION, "Éxito", "Usuario creado con exito");
 
         } catch (UsuarioYaExisteException e) {
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", e.getMessage());
+            mostrarAlerta(Alert.AlertType.CONFIRMATION, "Éxito", e.getMessage());
         } catch (FormularioIncorrectoException e) {
             mostrarAlerta(Alert.AlertType.WARNING, "Error de validación", e.getMessage());
         }

@@ -1,12 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="app.controllers.CategoriaController">
-    <center>
-        <VBox alignment="CENTER" spacing="15">
-            <Label text="Categoria"/>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="app.controllers.CategoriaController"
+            prefWidth="700" prefHeight="700">
+
+    <VBox spacing="10" style="-fx-padding: 20;">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+
+        <Label text="Resumen por Categoría"
+               style="-fx-font-size: 22; -fx-font-weight: bold;"
+               alignment="CENTER"/>
+
+        <HBox spacing="30" alignment="CENTER">
+            <Label fx:id="lblIngresosTotales"
+                   style="-fx-text-fill: green; -fx-font-size: 18;"/>
+            <Label fx:id="lblGastosTotales"
+                   style="-fx-text-fill: red; -fx-font-size: 18;"/>
+            <Label fx:id="lblBalanceTotal"
+                   style="-fx-text-fill: gray; -fx-font-size: 18; -fx-font-weight: bold;"/>
+        </HBox>
+
+        <VBox spacing="10">
+            <Label text="Fuentes de Ingreso"
+                   style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: green;"/>
+            <ListView fx:id="listaFuentesIngresos"
+                      prefHeight="200"/>
         </VBox>
-    </center>
-</BorderPane>
+
+        <VBox spacing="10">
+            <Label text="Motivos de Gasto"
+                   style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: red;"/>
+            <ListView fx:id="listaMotivosGastos"
+                      prefHeight="200"/>
+        </VBox>
+
+        <Label fx:id="lblCategoriaSeleccionada"
+               text="Selecciona una categoría para ver las transacciones"
+               style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+        <ListView fx:id="listaTransacciones"
+                  prefHeight="200"/>
+
+    </VBox>
+</AnchorPane>

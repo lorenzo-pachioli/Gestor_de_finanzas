@@ -20,11 +20,12 @@ public class ListaPersonas {
 
     public void guardarListaPersonas() {
         JSONPersonas.grabarPersonas(this);
+        iniciarListaPersonas();
     }
 
     public ArrayList<Persona> getListaPersonas() {
         if (App.persona instanceof Administrador) return listaPersonas.getElementos();
-        return new ArrayList<>();
+        return listaPersonas.getElementos();
     }
 
     public void setListaPersonas(ListaGenerica<Persona> listaPersonas) {
@@ -33,8 +34,8 @@ public class ListaPersonas {
     }
 
     public void agregarPersona(Persona persona) {
-        this.listaPersonas.agregar(persona);
-        this.guardarListaPersonas();
+        JSONPersonas.agregarPersonas(persona);
+        iniciarListaPersonas();
     }
 
     public  void modificarPersona(Persona persona){

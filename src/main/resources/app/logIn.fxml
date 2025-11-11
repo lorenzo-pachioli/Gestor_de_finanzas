@@ -7,7 +7,7 @@
       xmlns:fx="http://javafx.com/fxml" alignment="CENTER" spacing="20.0" style="-fx-padding: 20;">
 
     <!-- Contenedor donde se renderizará el titulo -->
-    <VBox fx:id="seccionTitulo" />
+    <VBox fx:id="seccionTitulo" alignment="CENTER" prefWidth="1200.0" />
 
     <!-- Contenedor donde se renderizará el formulario de FormsFX -->
     <VBox fx:id="formContainer" />

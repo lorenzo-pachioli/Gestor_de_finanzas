@@ -4,6 +4,7 @@ import app.enums.NivelAcceso;
 import app.models.colecciones.ListaGenerica;
 import app.models.colecciones.ListaPersonas;
 import app.models.extras.PasswordAuth;
+import app.models.transacciones.Transaccion;
 import app.models.usuarios.Administrador;
 import app.models.usuarios.Persona;
 import app.models.usuarios.Usuario;
@@ -35,6 +36,13 @@ public class JSONPersonas extends JSONUtiles {
             }
         }
         grabar(jsonLista, archivo);
+    }
+
+    public static void agregarPersonas(Persona persona){
+        JSONObject jsonPersonas = personaAJson(persona);
+        JSONArray lista = leerPersonas();
+        lista.put(jsonPersonas);
+        grabarPersonas(lista);
     }
 
     public static void borrarUnaPersona(Persona persona){
@@ -79,23 +87,6 @@ public class JSONPersonas extends JSONUtiles {
             System.out.println(e.getMessage());
             return new Usuario();
         }
-    }
-
-    public static void registrarPersona(Persona persona){
-        JSONArray array = new JSONArray();
-        array = leerPersonas();
-        JSONObject u = new JSONObject();
-        u.put("id", persona.getId());
-        u.put("nombre", persona.getNombre());
-        u.put("apellido", persona.getApellido());
-        u.put("dni", persona.getDni());
-        u.put("telefono", persona.getTelefono());
-        u.put("email", persona.getEmail());
-        u.put("contrasenia", persona.getContrasenia());
-        u.put("acceso", persona instanceof Usuario ? NivelAcceso.USUARIO:NivelAcceso.ADMINISTRADOR);
-        u.put("bloqueado", persona.isBloqueado());
-        array.put(u);
-        grabarPersonas(array);
     }
 
     public static boolean existeusuario(String email){
