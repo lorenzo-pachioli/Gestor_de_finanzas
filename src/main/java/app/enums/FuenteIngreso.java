@@ -1,5 +1,5 @@
 package app.enums;
 
 public enum FuenteIngreso {
-    VENTA, OTROS;
+    SALARIO, SERVICIOS, INVERSIONES, REEMBOLSOS, FAMILIARES, VENTA, OTROS;
 }
