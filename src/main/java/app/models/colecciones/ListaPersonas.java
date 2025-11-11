@@ -20,7 +20,7 @@ public class ListaPersonas {
 
     public void guardarListaPersonas() {
         JSONPersonas.grabarPersonas(this);
-        App.listaPersonas.iniciarListaPersonas();
+        iniciarListaPersonas();
     }
 
     public ArrayList<Persona> getListaPersonas() {
@@ -34,8 +34,8 @@ public class ListaPersonas {
     }
 
     public void agregarPersona(Persona persona) {
-        this.listaPersonas.agregar(persona);
-        this.guardarListaPersonas();
+        JSONPersonas.agregarPersonas(persona);
+        iniciarListaPersonas();
     }
 
     public  void modificarPersona(Persona persona){

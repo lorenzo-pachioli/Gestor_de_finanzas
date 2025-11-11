@@ -4,6 +4,7 @@ import app.enums.NivelAcceso;
 import app.models.colecciones.ListaGenerica;
 import app.models.colecciones.ListaPersonas;
 import app.models.extras.PasswordAuth;
+import app.models.transacciones.Transaccion;
 import app.models.usuarios.Administrador;
 import app.models.usuarios.Persona;
 import app.models.usuarios.Usuario;
@@ -35,6 +36,13 @@ public class JSONPersonas extends JSONUtiles {
             }
         }
         grabar(jsonLista, archivo);
+    }
+
+    public static void agregarPersonas(Persona persona){
+        JSONObject jsonPersonas = personaAJson(persona);
+        JSONArray lista = leerPersonas();
+        lista.put(jsonPersonas);
+        grabarPersonas(lista);
     }
 
     public static void borrarUnaPersona(Persona persona){
