@@ -3,9 +3,6 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### JSONs ###
-Transacciones.json
-Personas.json
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

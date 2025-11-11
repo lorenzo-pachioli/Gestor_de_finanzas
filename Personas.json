@@ -1,0 +1,35 @@
+[
+  {
+    "apellido": "test",
+    "acceso": "USUARIO",
+    "bloqueado": false,
+    "contrasenia": "$31$16$s6uEHTvaf9545tb6zjqgx42eXt0YM99B6MvJAnfdhrY",
+    "id": "59edc167-b60d-4eb2-8e00-d9c4c14a7bf2",
+    "telefono": 5555555,
+    "nombre": "user",
+    "dni": 123456,
+    "email": "user@gmail.com"
+  },
+  {
+    "apellido": "algo",
+    "acceso": "ADMINISTRADOR",
+    "bloqueado": false,
+    "contrasenia": "$31$16$Os4zlbziJQaV5_gQwTYBVehk7YdM2S0ZzNr-cxFxxmo",
+    "id": "94d95dc4-6deb-4a87-a6b2-faef42375cd3",
+    "telefono": 5555555,
+    "nombre": "admin",
+    "dni": 123456,
+    "email": "admin@gmail.com"
+  },
+  {
+    "apellido": "algo2",
+    "acceso": "ADMINISTRADOR",
+    "bloqueado": false,
+    "contrasenia": "$31$16$bFt72w3I4hiaQpjdAsPDMvs_rhk66L4kTEce3Yx2IYE",
+    "id": "ebc7a881-1eef-49b8-9cac-cc0103baa823",
+    "telefono": 5555555,
+    "nombre": "admin2",
+    "dni": 123456,
+    "email": "admin2@gmail.com"
+  }
+]
